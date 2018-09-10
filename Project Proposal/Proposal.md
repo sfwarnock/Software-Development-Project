@@ -13,14 +13,14 @@ A simple software program to take time phased data schedule from Oracle Primaver
  
 # Fullstack conceptual components:       
 
-[Data processing software]
+**Data processing software**
 Python software package to process schedule data from a CSV output file, Python programming will utilize Pandas, Numpy, and Matplot to process and visualize data.
      
-[SQL Database for data storage and processing]
+**SQL Database for data storage and processing**
 The processed data from the data output file software will be stored in a SQL database. The use of a SQL database is            required to allow historical access to prior month data as well as allow the user interface access to different level of dataset analysis.
            
-[Application Program Interface]
+**Application Program Interface**
 An API to fully integrate the three major components of the software program.  The API will serve as the connection for the data processing software to the SQL database storage.  The API will also serve as the connection for the SQL database to the web based user interface.
 
-[User Interface]
+**User Interface**
 The user interface(UI) is a web based application which allows users (project personal) to access the data sets produced by the data processing software.  The UI will be written in HTML5/CSS/JavaScript. The application will provide the user access to a portfolio projects, filter data from selected project/projects and allow for easy graphical visualization of the selected data.
