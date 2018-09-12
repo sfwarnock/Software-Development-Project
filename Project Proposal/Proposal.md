@@ -24,3 +24,17 @@ An API to fully integrate the three major components of the software program.  T
 
 **User Interface**
 The user interface(UI) is a web based application which allows users (project personal) to access the data sets produced by the data processing software.  The UI will be written in HTML5/CSS/JavaScript. The application will provide the user access to a portfolio projects, filter data from selected project/projects and allow for easy graphical visualization of the selected data.
+
+# Minimum Viable Product
+The minimum viable product (MVP) shall contain the following functionality:
+The user shall be able to drop/access an output CSV datafile via the UI
+The CSV shall process the data and produce the minimum datasets:
+Period SPI, CPI, Cost Variance, Schedule Variance, Budgeted Cost of Work Remaining, Variance at Complete
+Cumulative SPI, CPI, Cost Variance, Schedule Variance, Budgeted Cost of Work Remaining, Variance at Complete
+The Budgeted Cost of Work Scheduled, Budgeted Cost of Work Performed, and Actual Cost of Work Performed will be displayed as line graphs (s-curve)
+The UI shall contain a dashboard with a set ‘home page’ format to show the computed metrics described above
+The UI shall have the functionality to allow the user to filter the data based on charger codes, work package numbers, and control account managers
+Any changes in filter selections shall automatically change the ‘home page’ metrics and graphs
+
+# Beyond the MVP
+The MVP described above represents the simplest project management data processing required on a month-to-month basis. Beyond the basic MVP is a software product that has the ability to better project than any software on the market today. Every metric described above represents a historical data point. The ability to quickly and accurately project near-term performance is a functionality which no known project management software possess. Beyond the MVP is a fully integrated, real time project management software with built-in machine learning functions to better predict and project based on past performance. A UI that allows project managers to adjust Estimate-to-completion and Estimate-at-Completes quickly and easily. The first ever project management software to incorporate the visual and functional elements of git like version control system for project management change control.
