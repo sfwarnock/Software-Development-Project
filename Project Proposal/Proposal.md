@@ -27,8 +27,8 @@ The user interface(UI) is a web based application which allows users (project pe
 
 # Minimum Viable Product
 The minimum viable product (MVP) shall contain the following functionality:
-    * The user shall be able to drop/access an output CSV datafile via the UI
-    * The CSV shall process the data and produce the minimum datasets:
+    *The user shall be able to drop/access an output CSV datafile via the UI
+    *The CSV shall process the data and produce the minimum datasets:
     * Period SPI, CPI, Cost Variance, Schedule Variance, Budgeted Cost of Work Remaining, Variance at Complete
     * Cumulative SPI, CPI, Cost Variance, Schedule Variance, Budgeted Cost of Work Remaining, Variance at Complete
     * The Budgeted Cost of Work Scheduled, Budgeted Cost of Work Performed, and Actual Cost of Work Performed will be displayed as line graphs (s-curve)
