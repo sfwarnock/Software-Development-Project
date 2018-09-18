@@ -4,7 +4,7 @@
 
 The proposed project is complex in regards to the technical ability of the coder/programmer performing the work. There are four components to project. Two of the components, the JSON API layer and SQL Database are completely new to programmer tasked with development. The two other applications, the user interface (UI) and the application will have less of a learning curve as the programmer has some experience with web-development and Python. 
 
-* Schedule
+* Schedule Risk
 
 The lack of technical acumen by the software programmer will put significant risk to meeting the sprint schedule and delivering a fully operational MVP by December 4th, 2018. The software developer has front loaded the application programming and should work ahead on the database and API development when time allows.  
 
