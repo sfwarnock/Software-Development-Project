@@ -9,7 +9,7 @@ Created on Thu Sep 20 06:16:23 2018
 period_BCWS, period_BCWP, period_ACWP = 0, 0, 0 # Period (Current Month) Buguted Cost of Work Scheduled,
                                                 # Bugeted Cost od Work Performed, Actual Cost of Work Performed
 
-cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0          # Cummalative (Total-to-Date) Buguted Cost of Work Scheduled,
+cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0          # Cumalative (Total-to-Date) Buguted Cost of Work Scheduled,
                                                 # Bugeted Cost od Work Performed, Actual Cost of Work Performed
 
 bac, pmb = 0, 0                                 # Budget at Complete, Performance Management Baseline
@@ -20,19 +20,19 @@ period_CV = period_BCWP - period_ACWP           # Cost Variance (Period)
 
 period_SV = period_BCWP - period_BCWS           # Schedule Variance (Period)
 
-cum_CV = cum_BCWP - cum_ACWP                    # Cummalative Cost Variance (Cummalative)
+cum_CV = cum_BCWP - cum_ACWP                    # Cumalative Cost Variance (Cumalative)
 
-cum_SV = cum_BCWP - cum_BCWS                    # Schedule Variance (Cummalative)
+cum_SV = cum_BCWP - cum_BCWS                    # Schedule Variance (Cumalative)
 
 
 # Performace Indicies
 period_CPI = period_BCWP / period_ACWP          # Cost Performance Index (Period)
 
-cum_CPI = cum_BCWP / cum_ACWP                   # Cost Performance Index (Cummalative)
+cum_CPI = cum_BCWP / cum_ACWP                   # Cost Performance Index (Cumalative)
 
 period_SPI = period_BCWP / period_BCWS          # Schedule Performance Index (Period)
 
-cum_SPI = cum_BCWP / cum_BCWS                   # Scheudle Performance Index (Cummalative)
+cum_SPI = cum_BCWP / cum_BCWS                   # Scheudle Performance Index (Cumalative)
 
 
 # Status
