@@ -9,3 +9,4 @@ def ev_MetricTypes(data_file):
     acwp = data_file.loc[data_file['Value Type'] == 'ACWP']
     bcwp = data_file.loc[data_file['Value Type'] == 'BCWP']
     bcws = data_file.loc[data_file['Value Type'] == 'BCWS']
+    return acwp, bcwp, bcws
