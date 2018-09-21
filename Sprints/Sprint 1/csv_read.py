@@ -9,6 +9,4 @@ import pandas as pd
 
 def csv_Read():
     data_file = pd.read_csv('datafile.csv').fillna(0)
-    print (data_file)
-    
-csv_Read()
+    return data_file
