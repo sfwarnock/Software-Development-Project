@@ -13,7 +13,17 @@ def ev_MetricTypes(data_file):
     bcws = data_file.loc[data_file['Value Type'] == 'BCWS']
     return acwp, bcwp, bcws
 
-
 def csv_Read():
     data_file = pd.read_csv('datafile.csv').fillna(0)
     return data_file
+
+def cum_Cost():
+    cum_CV = cum_BCWP - cum_ACWP
+    cum_CPI = cum_BCWP / cum_ACWP
+
+def cum_Schedule():
+    cum_SV = cum_BCWP - cum_BCWS
+    cum_SPI = cum_BCWP / cum_BCWS 
+
+def main():
+    
