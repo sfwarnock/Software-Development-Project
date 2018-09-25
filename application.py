@@ -7,7 +7,6 @@ Created on Fri Sep 21 06:52:53 2018
 
 import pandas as pd
 
-
 cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0
 period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
 
@@ -32,6 +31,10 @@ def ev_MetricTypes(csv_DataFrame):
     acwp.loc['Period Total Cost', headerValues] = acwp[headerValues].sum()
     bcwp.loc['Period Total Earned', headerValues] = bcwp[headerValues].sum()
     bcws.loc['Period Total Planned', headerValues] = bcws[headerValues].sum()
+    
+    acwp['Total Cost'] = acwp.loc[:,headerValues].sum(axis=1)
+    bcwp['Total Earned'] = bcwp.loc[:,headerValues].sum(axis=1)
+    bcws['Total Planned'] = bcws.loc[:,headerValues].sum(axis=1)
 
 def cum_Schedule():
     cum_SV = cum_BCWP - cum_BCWS
