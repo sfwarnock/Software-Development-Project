@@ -35,6 +35,10 @@ def ev_MetricTypes(csv_DataFrame):
     acwp['Total Cost'] = acwp.loc[:,headerValues].sum(axis=1)
     bcwp['Total Earned'] = bcwp.loc[:,headerValues].sum(axis=1)
     bcws['Total Planned'] = bcws.loc[:,headerValues].sum(axis=1)
+    
+    combine_period = [acwp, bcwp, bcws]
+
+    period_DataFrame = pd.concat(combine_period)
 
 def cum_Schedule():
     cum_SV = cum_BCWP - cum_BCWS
