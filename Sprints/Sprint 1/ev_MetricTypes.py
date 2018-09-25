@@ -15,3 +15,7 @@ def ev_MetricTypes(csv_DataFrame):
     acwp.loc['Period Total Cost', headerValues] = acwp[headerValues].sum()
     bcwp.loc['Period Total Earned', headerValues] = bcwp[headerValues].sum()
     bcws.loc['Period Total Planned', headerValues] = bcws[headerValues].sum()
+    
+    acwp['Total Cost'] = acwp.loc[:,headerValues].sum(axis=1)
+    bcwp['Total Earned'] = bcwp.loc[:,headerValues].sum(axis=1)
+    bcws['Total Planned'] = bcws.loc[:,headerValues].sum(axis=1)
