@@ -10,3 +10,5 @@ import pandas as pd
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
     csv_header = csv_DataFrame.columns.values.tolist()
+    headerValues = csv_DataFrame.columns.values[6:].tolist()
+    return csv_DataFrame, csv_header, headerValues
