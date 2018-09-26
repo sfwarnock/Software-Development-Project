@@ -11,34 +11,50 @@ cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0
 period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
 
 def main():
-    csv_Read()
-    cum_Schedule()
-    cum_Cost()
-    
+    csv_DataFrame, csv_header, headerValues = csv_Read()
+    period__DataFrame = ev_MetricTypes(csv_DataFrame, csv_header, headerValues)
 main()
     
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
-    print(csv_DataFrame)
+    csv_header = csv_DataFrame.columns.values.tolist()
+    headerValues = csv_DataFrame.columns.values[6:].tolist()
+    return csv_DataFrame, csv_header, headerValues
     
-def ev_MetricTypes(csv_DataFrame):
-    acwp_DataFrame = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'ACWP']
-    bcwp_DataFrame = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'BCWP']
-    bcws_DataFrame = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'BCWS']
-    
-    headerValues = dataFrame.columns.values[6:].tolist()
-    
+def ev_MetricTypes(csv_DataFrame, csv_header, headerValues):
+    acwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'ACWP']
     acwp.loc['Period Total Cost', headerValues] = acwp[headerValues].sum()
-    bcwp.loc['Period Total Earned', headerValues] = bcwp[headerValues].sum()
-    bcws.loc['Period Total Planned', headerValues] = bcws[headerValues].sum()
-    
-    acwp['Total Cost'] = acwp.loc[:,headerValues].sum(axis=1)
+    acwp['Total Actual Cost'] = acwp.loc[:,headerValues].sum(axis=1)
+    acwp_header = acwp.columns.values.tolist()
+    for columnHeaders in acwp_header:
+        if columnHeaders not in csv_header:
+            csv_header.append(columnHeaders)
+        if columnHeaders in csv_header:
+            continue
+        
+    bcwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'BCWP']
+    bcwp.loc['Period Total Earned', headerValues] = bcwp[headerValues].sum()    
     bcwp['Total Earned'] = bcwp.loc[:,headerValues].sum(axis=1)
+    bcwp_header = bcwp.columns.values.tolist()
+    for columnHeaders in bcwp_header:
+        if columnHeaders not in csv_header:
+            csv_header.append(columnHeaders)
+        if columnHeaders in csv_header:
+            continue
+        
+    bcws = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'BCWS']
+    bcws.loc['Period Total Planned', headerValues] = bcws[headerValues].sum()
     bcws['Total Planned'] = bcws.loc[:,headerValues].sum(axis=1)
-    
-    combine_period = [acwp, bcwp, bcws]
-
-    period_DataFrame = pd.concat(combine_period)
+    bcws_header = bcws.columns.values.tolist()
+    for columnHeaders in bcws_header:
+        if columnHeaders not in csv_header:
+            csv_header.append(columnHeaders)
+        if columnHeaders in csv_header:
+            continue
+        
+    period_DataFrame = pd.concat([acwp, bcwp, bcws]).sort_values(by='CAM').reindex(columns = csv_header)
+    print (period_DataFrame)
+    return period_DataFrame
 
 def cum_Schedule():
     cum_SV = cum_BCWP - cum_BCWS
