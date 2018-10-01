@@ -52,7 +52,7 @@ def ev_MetricTypes(csv_DataFrame, csv_header, headerValues):
         if columnHeaders in csv_header:
             continue
         
-    period_DataFrame = pd.concat([acwp, bcwp, bcws]).sort_values(by='CAM').reindex(columns = csv_header)
+    period_DataFrame = pd.concat([acwp, bcwp, bcws]).sort_values(by='CAM').reindex(columns = csv_header).fillna(0)
     print (period_DataFrame)
     return period_DataFrame
 
@@ -75,3 +75,11 @@ def period_Schedule():
     period_SPI = period_BCWP / period_BCWS
     period_SV = period_BCWP - period_BCWS
     return period_SPI, period_SV
+
+def filter_ChargeCode():
+    filter_ChargeCode = pd.pivot_table(period_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
+    return filter_ChargeCode
+
+def filter_CAM():
+    filter_CAM = pd.pivot_table(period_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
+    return filter_CAM
