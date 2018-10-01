@@ -36,6 +36,6 @@ def ev_MetricTypes(csv_DataFrame, csv_header, headerValues):
         if columnHeaders in csv_header:
             continue
         
-    period_DataFrame = pd.concat([acwp, bcwp, bcws]).sort_values(by='CAM').reindex(columns = csv_header)
+    period_DataFrame = pd.concat([acwp, bcwp, bcws], sort = True).sort_values(by='CAM').reindex(columns = csv_header)
     print (period_DataFrame)
     return period_DataFrame
