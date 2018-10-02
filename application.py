@@ -85,3 +85,11 @@ def filter_ChargeCode():
 def filter_CAM():
     filter_CAM = pd.pivot_table(period_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
     return filter_CAM
+
+def cumualative_Data():
+    cum_DataFrame = period_DataFrame
+
+    cum_DataFrame.loc['Cumualative Total Cost'] = cum_DataFrame.loc['Period Total Cost'].cumsum()
+    cum_DataFrame.loc['Cumualative Planned Value'] = cum_DataFrame.loc['Period Total Planned'].cumsum()
+    cum_DataFrame.loc['Cumualative Earned Value'] = cum_DataFrame.loc['Period Total Earned'].cumsum()
+    return cum_DataFrame
