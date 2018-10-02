@@ -12,8 +12,8 @@ period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
 
 def main():
     csv_DataFrame, csv_header, headerValues = csv_Read()
-    period__DataFrame = period_Data(csv_DataFrame, csv_header, headerValues)
-    cum_DataFrame = cumualative_Data(period_DataFrame)
+    period_DataFrame = period_Data(csv_DataFrame, csv_header, headerValues)
+    cumulative_Data(period_DataFrame)
       
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
@@ -86,12 +86,12 @@ def filter_CAM(period_DataFrame, csv_header):
     filter_CAM = pd.pivot_table(period_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
     return filter_CAM
 
-def cumualative_Data(period_DataFrame):
+def cumulative_Data(period_DataFrame):
     cum_DataFrame = period_DataFrame
 
-    cum_DataFrame.loc['Cumualative Total Cost'] = cum_DataFrame.loc['Period Total Cost'].cumsum()
-    cum_DataFrame.loc['Cumualative Planned Value'] = cum_DataFrame.loc['Period Total Planned'].cumsum()
-    cum_DataFrame.loc['Cumualative Earned Value'] = cum_DataFrame.loc['Period Total Earned'].cumsum()
+    cum_DataFrame.loc['Cumulative Total Cost'] = cum_DataFrame.loc['Period Total Cost'].cumsum()
+    cum_DataFrame.loc['Cumulative Planned Value'] = cum_DataFrame.loc['Period Total Planned'].cumsum()
+    cum_DataFrame.loc['Cumulative Earned Value'] = cum_DataFrame.loc['Period Total Earned'].cumsum()
     print(cum_DataFrame)
     return cum_DataFrame
 
