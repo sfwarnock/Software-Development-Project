@@ -12,7 +12,9 @@ period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
 
 def main():
     csv_DataFrame, csv_header, headerValues = csv_Read()
-    period__DataFrame = ev_MetricTypes(csv_DataFrame, csv_header, headerValues)
+    period__DataFrame = period_Data(csv_DataFrame, csv_header, headerValues)
+    
+    
 main()
     
 def csv_Read():
@@ -21,7 +23,7 @@ def csv_Read():
     headerValues = csv_DataFrame.columns.values[6:].tolist()
     return csv_DataFrame, csv_header, headerValues
     
-def ev_MetricTypes(csv_DataFrame, csv_header, headerValues):
+def period_Data(csv_DataFrame, csv_header, headerValues):
     acwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'ACWP']
     acwp.loc['Period Total Cost', headerValues] = acwp[headerValues].sum()
     acwp['Total Actual Cost'] = acwp.loc[:,headerValues].sum(axis=1)
@@ -52,7 +54,7 @@ def ev_MetricTypes(csv_DataFrame, csv_header, headerValues):
         if columnHeaders in csv_header:
             continue
         
-    period_DataFrame = pd.concat([acwp, bcwp, bcws]).sort_values(by='CAM').reindex(columns = csv_header).fillna(0)
+    period_DataFrame = pd.concat([acwp, bcwp, bcws], sort = True).sort_values(by='CAM').reindex(columns = csv_header).fillna(0)
     print (period_DataFrame)
     return period_DataFrame
 
