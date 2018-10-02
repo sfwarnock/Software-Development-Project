@@ -13,6 +13,8 @@ period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
 def main():
     csv_DataFrame, csv_header, headerValues = csv_Read()
     period_DataFrame = period_Data(csv_DataFrame, csv_header, headerValues)
+    period_Cost(period_DataFrame, headerValues)
+    period_Schedule(period_DataFrame, headerValues)
     cumulative_Data(period_DataFrame)
       
 def csv_Read():
