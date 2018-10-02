@@ -11,8 +11,9 @@ cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0
 period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
 
 def main():
-    csv_DataFrame, csv_header, headerValues = csv_Read()
+    csv_Read()
     period__DataFrame = period_Data(csv_DataFrame, csv_header, headerValues)
+    cum_DataFrame = cumualative_Data(period_DataFrame)
     
     
 main()
@@ -58,7 +59,7 @@ def period_Data(csv_DataFrame, csv_header, headerValues):
     print (period_DataFrame)
     return period_DataFrame
     
-def period_Cost():
+def period_Cost(period_DataFrame, headerValues):
     period_CPI = period_BCWP / period_ACWP
     period_CV = period_BCWP - period_ACWP
     
@@ -69,7 +70,7 @@ def period_Cost():
     period_DataFrame.loc['Period CPI'] = period_CPI
     return period_CPI, period_CV
 
-def period_Schedule():
+def period_Schedule(period_DataFrame, headerValues):
     period_SPI = period_BCWP / period_BCWS
     period_SV = period_BCWP - period_BCWS
     
@@ -88,7 +89,7 @@ def filter_CAM():
     filter_CAM = pd.pivot_table(period_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
     return filter_CAM
 
-def cumualative_Data():
+def cumualative_Data(period_DataFrame):
     cum_DataFrame = period_DataFrame
 
     cum_DataFrame.loc['Cumualative Total Cost'] = cum_DataFrame.loc['Period Total Cost'].cumsum()
