@@ -57,25 +57,27 @@ def period_Data(csv_DataFrame, csv_header, headerValues):
     period_DataFrame = pd.concat([acwp, bcwp, bcws], sort = True).sort_values(by='CAM').reindex(columns = csv_header).fillna(0)
     print (period_DataFrame)
     return period_DataFrame
-
-def cum_Schedule():
-    cum_SV = cum_BCWP - cum_BCWS
-    cum_SPI = cum_BCWP / cum_BCWS
-    return cum_SV, cum_SPI
-    
-def cum_Cost(data_file):
-    cum_CV = cum_BCWP - cum_ACWP
-    cum_CPI = cum_BCWP / cum_ACWP
-    return cum_CV, cum_CPI
     
 def period_Cost():
     period_CPI = period_BCWP / period_ACWP
     period_CV = period_BCWP - period_ACWP
+    
+    period_BCWP = period_DataFrame.loc['Period Total Planned', headerValues]
+    period_ACWP = period_DataFrame.loc['Period Total Cost', headerValues]
+    
+    period_DataFrame.loc['Period CV'] = period_CV
+    period_DataFrame.loc['Period CPI'] = period_CPI
     return period_CPI, period_CV
 
 def period_Schedule():
     period_SPI = period_BCWP / period_BCWS
     period_SV = period_BCWP - period_BCWS
+    
+    period_BCWP = period_DataFrame.loc['Period Total Planned', headerValues]
+    period_BCWS = period_DataFrame.loc['Period Total Earned', headerValues]
+
+    period_DataFrame.loc['Period SV'] = period_SV
+    period_DataFrame.loc['Period SPI'] = period_SPI
     return period_SPI, period_SV
 
 def filter_ChargeCode():
@@ -93,3 +95,13 @@ def cumualative_Data():
     cum_DataFrame.loc['Cumualative Planned Value'] = cum_DataFrame.loc['Period Total Planned'].cumsum()
     cum_DataFrame.loc['Cumualative Earned Value'] = cum_DataFrame.loc['Period Total Earned'].cumsum()
     return cum_DataFrame
+
+def cum_Schedule():
+    cum_SV = cum_BCWP - cum_BCWS
+    cum_SPI = cum_BCWP / cum_BCWS
+    return cum_SV, cum_SPI
+    
+def cum_Cost(data_file):
+    cum_CV = cum_BCWP - cum_ACWP
+    cum_CPI = cum_BCWP / cum_ACWP
+    return cum_CV, cum_CPI
