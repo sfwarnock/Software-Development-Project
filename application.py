@@ -15,7 +15,10 @@ def main():
     period_DataFrame = period_Data(csv_DataFrame, csv_header, headerValues)
     period_Cost(period_DataFrame, headerValues)
     period_Schedule(period_DataFrame, headerValues)
-    cumulative_Data(period_DataFrame)
+    cum_DataFrame = cumulative_Data(period_DataFrame)
+    cum_Cost(cum_DataFrame, headerValues)
+    cum_Schedule(cum_DataFrame, headerValues)
+    print (cum_DataFrame)
       
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
@@ -94,17 +97,28 @@ def cumulative_Data(period_DataFrame):
     cum_DataFrame.loc['Cumulative Total Cost'] = cum_DataFrame.loc['Period Total Cost'].cumsum()
     cum_DataFrame.loc['Cumulative Planned Value'] = cum_DataFrame.loc['Period Total Planned'].cumsum()
     cum_DataFrame.loc['Cumulative Earned Value'] = cum_DataFrame.loc['Period Total Earned'].cumsum()
-    print(cum_DataFrame)
     return cum_DataFrame
 
-def cum_Schedule():
+def cum_Schedule(cum_DataFrame, headerValues):
+    cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', headerValues]
+    cum_BCWS = cum_DataFrame.loc['Cumulative Planned Value', headerValues]
+    
     cum_SV = cum_BCWP - cum_BCWS
     cum_SPI = cum_BCWP / cum_BCWS
+    
+    cum_DataFrame.loc['SPI'] = cum_SPI
+    cum_DataFrame.loc['SV'] = cum_SV
     return cum_SV, cum_SPI
     
-def cum_Cost(data_file):
+def cum_Cost(cum_DataFrame, headerValues):
+    cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', headerValues]
+    cum_ACWP = cum_DataFrame.loc['Cumulative Total Cost', headerValues]
+    
     cum_CV = cum_BCWP - cum_ACWP
     cum_CPI = cum_BCWP / cum_ACWP
+    
+    cum_DataFrame.loc['CPI'] = cum_CPI
+    cum_DataFrame.loc['CV'] = cum_CV
     return cum_CV, cum_CPI
 
 main()
