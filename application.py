@@ -11,25 +11,25 @@ cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0
 period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
 
 def main():
-    csv_DataFrame, csv_header, headerValues = csv_Read()
-    period_DataFrame = period_Data(csv_DataFrame, csv_header, headerValues)
-    period_Cost(period_DataFrame, headerValues)
-    period_Schedule(period_DataFrame, headerValues)
+    csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
+    period_DataFrame = period_Data(csv_DataFrame, csv_header, dateHeaderValues)
+    period_Cost(period_DataFrame, dateHeaderValues)
+    period_Schedule(period_DataFrame, dateHeaderValues)
     cum_DataFrame = cumulative_Data(period_DataFrame)
-    cum_Cost(cum_DataFrame, headerValues)
-    cum_Schedule(cum_DataFrame, headerValues)
+    cum_Cost(cum_DataFrame, dateHeaderValues)
+    cum_Schedule(cum_DataFrame, dateHeaderValues)
     print (cum_DataFrame)
       
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
     csv_header = csv_DataFrame.columns.values.tolist()
-    headerValues = csv_DataFrame.columns.values[6:].tolist()
-    return csv_DataFrame, csv_header, headerValues
+    datedateHeaderValues = csv_DataFrame.columns.values[6:].tolist()
+    return csv_DataFrame, csv_header, datedateHeaderValues
 
-def period_Data(csv_DataFrame, csv_header, headerValues):
+def period_Data(csv_DataFrame, csv_header, dateHeaderValues):
     acwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'ACWP']
-    acwp.loc['Period Total Cost', headerValues] = acwp[headerValues].sum()
-    acwp['Total Actual Cost'] = acwp.loc[:,headerValues].sum(axis=1)
+    acwp.loc['Period Total Cost', dateHeaderValues] = acwp[dateHeaderValues].sum()
+    acwp['Total Actual Cost'] = acwp.loc[:,dateHeaderValues].sum(axis=1)
     acwp_header = acwp.columns.values.tolist()
     for columnHeaders in acwp_header:
         if columnHeaders not in csv_header:
@@ -38,8 +38,8 @@ def period_Data(csv_DataFrame, csv_header, headerValues):
             continue
         
     bcwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'BCWP']
-    bcwp.loc['Period Total Earned', headerValues] = bcwp[headerValues].sum()    
-    bcwp['Total Earned'] = bcwp.loc[:,headerValues].sum(axis=1)
+    bcwp.loc['Period Total Earned', dateHeaderValues] = bcwp[dateHeaderValues].sum()    
+    bcwp['Total Earned'] = bcwp.loc[:,dateHeaderValues].sum(axis=1)
     bcwp_header = bcwp.columns.values.tolist()
     for columnHeaders in bcwp_header:
         if columnHeaders not in csv_header:
@@ -48,8 +48,8 @@ def period_Data(csv_DataFrame, csv_header, headerValues):
             continue
         
     bcws = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'BCWS']
-    bcws.loc['Period Total Planned', headerValues] = bcws[headerValues].sum()
-    bcws['Total Planned'] = bcws.loc[:,headerValues].sum(axis=1)
+    bcws.loc['Period Total Planned', dateHeaderValues] = bcws[dateHeaderValues].sum()
+    bcws['Total Planned'] = bcws.loc[:,dateHeaderValues].sum(axis=1)
     bcws_header = bcws.columns.values.tolist()
     for columnHeaders in bcws_header:
         if columnHeaders not in csv_header:
@@ -61,9 +61,9 @@ def period_Data(csv_DataFrame, csv_header, headerValues):
     print (period_DataFrame)
     return period_DataFrame
             
-def period_Cost(period_DataFrame, headerValues):
-    period_BCWP = period_DataFrame.loc['Period Total Planned', headerValues]
-    period_ACWP = period_DataFrame.loc['Period Total Cost', headerValues]
+def period_Cost(period_DataFrame, dateHeaderValues):
+    period_BCWP = period_DataFrame.loc['Period Total Planned', dateHeaderValues]
+    period_ACWP = period_DataFrame.loc['Period Total Cost', dateHeaderValues]
     
     period_CPI = period_BCWP / period_ACWP
     period_CV = period_BCWP - period_ACWP
@@ -72,9 +72,9 @@ def period_Cost(period_DataFrame, headerValues):
     period_DataFrame.loc['Period CPI'] = period_CPI
     return period_CPI, period_CV
 
-def period_Schedule(period_DataFrame, headerValues):
-    period_BCWP = period_DataFrame.loc['Period Total Planned', headerValues]
-    period_BCWS = period_DataFrame.loc['Period Total Earned', headerValues]
+def period_Schedule(period_DataFrame, dateHeaderValues):
+    period_BCWP = period_DataFrame.loc['Period Total Planned', dateHeaderValues]
+    period_BCWS = period_DataFrame.loc['Period Total Earned', dateHeaderValues]
     
     period_SPI = period_BCWP / period_BCWS
     period_SV = period_BCWP - period_BCWS
@@ -99,9 +99,9 @@ def cumulative_Data(period_DataFrame):
     cum_DataFrame.loc['Cumulative Earned Value'] = cum_DataFrame.loc['Period Total Earned'].cumsum()
     return cum_DataFrame
 
-def cum_Schedule(cum_DataFrame, headerValues):
-    cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', headerValues]
-    cum_BCWS = cum_DataFrame.loc['Cumulative Planned Value', headerValues]
+def cum_Schedule(cum_DataFrame, dateHeaderValues):
+    cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
+    cum_BCWS = cum_DataFrame.loc['Cumulative Planned Value', dateHeaderValues]
     
     cum_SV = cum_BCWP - cum_BCWS
     cum_SPI = cum_BCWP / cum_BCWS
@@ -110,9 +110,9 @@ def cum_Schedule(cum_DataFrame, headerValues):
     cum_DataFrame.loc['SV'] = cum_SV
     return cum_SV, cum_SPI
     
-def cum_Cost(cum_DataFrame, headerValues):
-    cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', headerValues]
-    cum_ACWP = cum_DataFrame.loc['Cumulative Total Cost', headerValues]
+def cum_Cost(cum_DataFrame, dateHeaderValues):
+    cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
+    cum_ACWP = cum_DataFrame.loc['Cumulative Total Cost', dateHeaderValues]
     
     cum_CV = cum_BCWP - cum_ACWP
     cum_CPI = cum_BCWP / cum_ACWP
@@ -120,5 +120,33 @@ def cum_Cost(cum_DataFrame, headerValues):
     cum_DataFrame.loc['CPI'] = cum_CPI
     cum_DataFrame.loc['CV'] = cum_CV
     return cum_CV, cum_CPI
+
+def bugeted_cost_work_remaining(cum_DataFrame):
+    bac = cum_DataFrame['Total Cost'].sum()
+    bcwp =cum_DataFrame.loc['Period Total Earned', 'Total Earned']
+    percent_complete = bcwp / bac                  
+    bcwr = bac - bcwp
+    return percent_complete, bcwr, bac
+
+def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp):
+    acwp = cum_DataFrame.loc['Period Total Cost', 'Total Actual Cost']
+    bcws = cum_DataFrame.loc['Period Total Planned', 'Total Planned']
+
+    eac = acwp + bcwr
+    tcpi = bac / eac                            
+
+    project_CPI = bcwp / acwp
+    project_SPI = bcwp / bcws
+    project_CV = bcwp - acwp
+    project_SV = bcwp - bcws
+
+    performance_ETC = acwp + (bcwr * project_CPI)  
+
+    performance_EAC = acwp + performance_ETC        
+
+    performance_tpci = bac / performance_EAC
+
+    varaince_at_complete = bac - eac
+    return eac, tcpi, project_CPI, project_SPI, project_CV, project_SV, performance_ETC, performance_EAC, performance_tpci, varaince_at_complete
 
 main()
