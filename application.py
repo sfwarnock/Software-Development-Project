@@ -18,6 +18,8 @@ def main():
     cum_DataFrame = cumulative_Data(period_DataFrame)
     cum_Cost(cum_DataFrame, dateHeaderValues)
     cum_Schedule(cum_DataFrame, dateHeaderValues)
+    bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
+    print (bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV)
     print (cum_DataFrame)
       
 def csv_Read():
@@ -58,7 +60,6 @@ def period_Data(csv_DataFrame, csv_header, dateHeaderValues):
             continue
         
     period_DataFrame = pd.concat([acwp, bcwp, bcws], sort = True).sort_values(by='CAM').reindex(columns = csv_header).fillna(0)
-    print (period_DataFrame)
     return period_DataFrame
             
 def period_Cost(period_DataFrame, dateHeaderValues):
@@ -83,13 +84,17 @@ def period_Schedule(period_DataFrame, dateHeaderValues):
     period_DataFrame.loc['Period SPI'] = period_SPI
     return period_SPI, period_SV
 
-def filter_ChargeCode(period_DataFrame, csv_header):
-    filter_ChargeCode = pd.pivot_table(period_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
-    return filter_ChargeCode
+def filter_ChargeCode(period_DataFrame, cum_DataFrame, csv_DataFrame, csv_header):
+    filter_ChargeCode_csv = pd.pivot_table(csv_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
+    filter_ChargeCode_period = pd.pivot_table(period_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
+    filter_ChargeCode_cum = pd.pivot_table(cum_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
+    return filter_ChargeCode_period, filter_ChargeCode_cum, filter_ChargeCode_csv
 
-def filter_CAM(period_DataFrame, csv_header):
-    filter_CAM = pd.pivot_table(period_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
-    return filter_CAM
+def filter_CAM(period_DataFrame, cum_DataFrame, csv_DataFrame, csv_header):
+    filter_CAM_csv = pd.pivot_table(csv_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
+    filter_CAM_period = pd.pivot_table(period_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
+    filter_CAM_cum = pd.pivot_table(cum_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
+    return filter_CAM_csv, filter_CAM_period, filter_CAM_cum
 
 def cumulative_Data(period_DataFrame):
     cum_DataFrame = period_DataFrame
@@ -121,32 +126,30 @@ def cum_Cost(cum_DataFrame, dateHeaderValues):
     cum_DataFrame.loc['CV'] = cum_CV
     return cum_CV, cum_CPI
 
-def bugeted_cost_work_remaining(cum_DataFrame):
+def project_reporting(cum_DataFrame):
     bac = cum_DataFrame['Total Cost'].sum()
     bcwp =cum_DataFrame.loc['Period Total Earned', 'Total Earned']
-    percent_complete = bcwp / bac                  
-    bcwr = bac - bcwp
-    return percent_complete, bcwr, bac
-
-def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp):
     acwp = cum_DataFrame.loc['Period Total Cost', 'Total Actual Cost']
     bcws = cum_DataFrame.loc['Period Total Planned', 'Total Planned']
-
-    eac = acwp + bcwr
-    tcpi = bac / eac                            
-
+        
     project_CPI = bcwp / acwp
     project_SPI = bcwp / bcws
     project_CV = bcwp - acwp
     project_SV = bcwp - bcws
+    return bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV
 
+def bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac):
+    percent_complete = bcwp / bac                  
+    bcwr = bac - bcwp
+    return percent_complete, bcwr
+
+def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI):
+    eac = acwp + bcwr
+    tcpi = bac / eac                            
     performance_ETC = acwp + (bcwr * project_CPI)  
-
     performance_EAC = acwp + performance_ETC        
-
     performance_tpci = bac / performance_EAC
-
     varaince_at_complete = bac - eac
-    return eac, tcpi, project_CPI, project_SPI, project_CV, project_SV, performance_ETC, performance_EAC, performance_tpci, varaince_at_complete
+    return eac, tcpi, performance_ETC, performance_EAC, performance_tpci, varaince_at_complete
 
 main()
