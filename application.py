@@ -9,9 +9,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0
-period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
-
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
     period_DataFrame = period_Data(csv_DataFrame, csv_header, dateHeaderValues)
@@ -21,16 +18,15 @@ def main():
     cum_Cost(cum_DataFrame, dateHeaderValues)
     cum_Schedule(cum_DataFrame, dateHeaderValues)
     bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
-    print (bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV)
+    print (bac, bcwp, bcws, acwp, project_CPI.round(2), project_SPI.round(2), project_CV, project_SV)
     print (cum_DataFrame)
-    data_Visualazation(cum_ACWP, cum_BCWP, cum_BCWS, period_ACWP, period_BCWS, period_BCWP, dateHeaderValues)
-
+    data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
       
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
     csv_header = csv_DataFrame.columns.values.tolist()
-    datedateHeaderValues = csv_DataFrame.columns.values[6:].tolist()
-    return csv_DataFrame, csv_header, datedateHeaderValues
+    dateHeaderValues = csv_DataFrame.columns.values[6:].tolist()
+    return csv_DataFrame, csv_header, dateHeaderValues
 
 def period_Data(csv_DataFrame, csv_header, dateHeaderValues):
     acwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'ACWP']
@@ -75,7 +71,7 @@ def period_Cost(period_DataFrame, dateHeaderValues):
     
     period_DataFrame.loc['Period CV'] = period_CV
     period_DataFrame.loc['Period CPI'] = period_CPI
-    return period_CPI, period_CV
+    return period_CPI, period_CV, period_ACWP
 
 def period_Schedule(period_DataFrame, dateHeaderValues):
     period_BCWP = period_DataFrame.loc['Period Total Planned', dateHeaderValues]
@@ -86,7 +82,7 @@ def period_Schedule(period_DataFrame, dateHeaderValues):
     
     period_DataFrame.loc['Period SV'] = period_SV
     period_DataFrame.loc['Period SPI'] = period_SPI
-    return period_SPI, period_SV
+    return period_SPI, period_SV, period_BCWP, period_BCWS
 
 def filter_ChargeCode(period_DataFrame, cum_DataFrame, csv_DataFrame, csv_header):
     filter_ChargeCode_csv = pd.pivot_table(csv_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
@@ -117,7 +113,7 @@ def cum_Schedule(cum_DataFrame, dateHeaderValues):
     
     cum_DataFrame.loc['SPI'] = cum_SPI
     cum_DataFrame.loc['SV'] = cum_SV
-    return cum_SV, cum_SPI
+    return cum_SV, cum_SPI, cum_BCWP, cum_BCWS
     
 def cum_Cost(cum_DataFrame, dateHeaderValues):
     cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
@@ -128,7 +124,7 @@ def cum_Cost(cum_DataFrame, dateHeaderValues):
     
     cum_DataFrame.loc['CPI'] = cum_CPI
     cum_DataFrame.loc['CV'] = cum_CV
-    return cum_CV, cum_CPI
+    return cum_CV, cum_CPI, cum_ACWP
 
 def project_reporting(cum_DataFrame):
     bac = cum_DataFrame['Total Cost'].sum()
@@ -156,8 +152,11 @@ def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI):
     varaince_at_complete = bac - eac
     return eac, tcpi, performance_ETC, performance_EAC, performance_tpci, varaince_at_complete
 
-def data_Visualazation(cum_ACWP, cum_BCWP, cum_BCWS, period_ACWP, period_BCWS, period_BCWP, dateHeaderValues):
-    # Project S-curve line chart
+def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
+    cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
+    cum_ACWP = cum_DataFrame.loc['Cumulative Total Cost', dateHeaderValues]
+    cum_BCWS = cum_DataFrame.loc['Cumulative Planned Value', dateHeaderValues]
+    
     fig, ax = plt.subplots()
     ax.plot(cum_ACWP, color = "Green")
     ax.plot(cum_BCWP, color = "Red")
@@ -168,17 +167,22 @@ def data_Visualazation(cum_ACWP, cum_BCWP, cum_BCWS, period_ACWP, period_BCWS, p
     plt.show()
     
     
-    # Period bar chart
+    period_BCWP = period_DataFrame.loc['Period Total Planned', dateHeaderValues]
+    period_BCWS = period_DataFrame.loc['Period Total Earned', dateHeaderValues]
+    period_ACWP = period_DataFrame.loc['Period Total Cost', dateHeaderValues]
+
     ind = np.arange(len(dateHeaderValues))
     width = 0.25
 
-    fig, ax = plt.subplots()
+    fig2, ax = plt.subplots()
 
     bcwsBar = ax.bar(ind - width, period_BCWS, width, color = 'Red', label = 'Planned Value')
     bcwpBar = ax.bar(ind, period_BCWP, width, color = 'Blue', label = 'Earned Value')
     acwpBar = ax.bar(ind + width, period_ACWP, width, color = 'Green', label = 'Actual Cost')
 
     ax.set_ylabel('$')
+    ax.set_xlabel('Month')
+    ax.set_xticks(np.arange(len(dateHeaderValues)))
     ax.set_xticklabels(dateHeaderValues)
     ax.set_title('Monthly Planned, Earned, and Actual Cost')
     ax.legend()
