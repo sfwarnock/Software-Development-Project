@@ -24,6 +24,7 @@ def data_Visualazation(cum_ACWP, cum_BCWP, cum_BCWS, period_ACWP, period_BCWS, p
     acwpBar = ax.bar(ind + width, period_ACWP, width, color = 'Green', label = 'Actual Cost')
 
     ax.set_ylabel('$')
+    ax.set_xticks(np.arange(len(headerValues)))
     ax.set_xticklabels(headerValues)
     ax.set_title('Monthly Planned, Earned, and Actual Cost')
     ax.legend()
