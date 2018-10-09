@@ -15,17 +15,17 @@ def data_Visualazation(cum_ACWP, cum_BCWP, cum_BCWS, period_ACWP, period_BCWS, p
     plt.show()
 
     ind = np.arange(len(period_BCWP))
-    width = 0.35
+    width = 0.25
 
     fig, ax = plt.subplots()
 
-    bcwsBar = ax.bar(ind - width/2, period_BCWS, width, color = 'Red', label = 'Planned Value')
-    bcwpBar = ax.bar(ind + width/2, period_BCWP, width, color = 'Blue', label = 'Earned Value')
-    acwpBar = ax.bar(ind + width/2, period_ACWP, width, color = 'Green', label = 'Actual Cost')
+    bcwsBar = ax.bar(ind - width, period_BCWS, width, color = 'Red', label = 'Planned Value')
+    bcwpBar = ax.bar(ind, period_BCWP, width, color = 'Blue', label = 'Earned Value')
+    acwpBar = ax.bar(ind + width, period_ACWP, width, color = 'Green', label = 'Actual Cost')
 
     ax.set_ylabel('$')
     ax.set_xticklabels(headerValues)
     ax.set_title('Monthly Planned, Earned, and Actual Cost')
     ax.legend()
-    
+
     plt.show()
