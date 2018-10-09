@@ -6,6 +6,8 @@ Created on Fri Sep 21 06:52:53 2018
 """
 
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 cum_BCWS, cum_BCWP, cum_ACWP = 0, 0, 0
 period_BCWS, period_BCWP, period_ACWP = 0, 0, 0
@@ -19,6 +21,7 @@ def main():
     cum_Cost(cum_DataFrame, dateHeaderValues)
     cum_Schedule(cum_DataFrame, dateHeaderValues)
     bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
+    data_Visualazation(cum_ACWP, cum_BCWP, cum_BCWS, period_ACWP, period_BCWS, period_BCWP, dateHeaderValues)
     print (bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV)
     print (cum_DataFrame)
       
@@ -151,5 +154,28 @@ def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI):
     performance_tpci = bac / performance_EAC
     varaince_at_complete = bac - eac
     return eac, tcpi, performance_ETC, performance_EAC, performance_tpci, varaince_at_complete
+
+def data_Visualazation(cum_ACWP, cum_BCWP, cum_BCWS, period_ACWP, period_BCWS, period_BCWP, dateHeaderValues):
+    fig, ax = plt.subplots()
+    ax.plot(cum_ACWP, color = "Green")
+    ax.plot(cum_BCWP, color = "Red")
+    ax.plot(cum_BCWS, color = "Blue")
+
+    ax.set(xlabel='Month', ylabel= '$', title= 'Project S-Curve')
+    plt.show()
+
+    ind = period_BCWP
+    width = 0.35
+    fig, ax = plt.subplots()
+    bcwsBar = ax.bar(ind - width/2, period_BCWS, width, color = 'Red', label = 'Planned Value')
+    bcwpBar = ax.bar(ind + width/2, period_BCWP, width, color = 'Blue', label = 'Earned Value')
+    acwpBar = ax.bar(ind + width/2, period_ACWP, width, color = 'Green', label = 'Actual Cost')
+
+    ax.set_ylabel('$')
+    ax.set_xticklabels(dateHeaderValues)
+    ax.set_title('Monthly Planned, Earned, and Actual Cost')
+    ax.legend()
+    
+    plt.show()
 
 main()
