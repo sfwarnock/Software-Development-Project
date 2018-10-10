@@ -8,6 +8,7 @@ Created on Fri Sep 21 06:52:53 2018
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import pyodbc
 
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
@@ -157,12 +158,15 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     cum_ACWP = cum_DataFrame.loc['Cumulative Total Cost', dateHeaderValues]
     cum_BCWS = cum_DataFrame.loc['Cumulative Planned Value', dateHeaderValues]
     
+    plt.style.use('dark_background')
+    
     fig, ax = plt.subplots()
     ax.plot(cum_ACWP, color = "Green")
     ax.plot(cum_BCWP, color = "Red")
     ax.plot(cum_BCWS, color = "Blue")
 
     ax.set(xlabel='Month', ylabel= '$', title= 'Project S-Curve')
+    ax.grid(False)
     ax.legend()
     plt.show()
     
@@ -185,8 +189,9 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     ax.set_xticks(np.arange(len(dateHeaderValues)))
     ax.set_xticklabels(dateHeaderValues)
     ax.set_title('Monthly Planned, Earned, and Actual Cost')
+    ax.grid(False)
     ax.legend()
 
     plt.show()
-
+    
 main()
