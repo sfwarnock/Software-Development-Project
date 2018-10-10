@@ -5,21 +5,13 @@ Created on Tue Oct  9 06:14:12 2018
 @author: Scott Warnock
 """
 
-import pyodbc
+from sqlalchemy import create_engine
 
-def sql_database():
-    sql_conn = pyodbc.connect('DRIVER = {}; SERVER=SQLSERVER2017; DATABASE= ; Trusted_Connection=yes')
-    cursor = connStr.cursor()
+engine = create_engine()
+
+def sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame):
+    csv_DataFrame.to_sql(csv_DataFrame, con = engine, if_exisits = 'replace', index_labels = 'id')
     
-    for index, row in cvs_DataFrame.iterrow():
-        cursor.excute("INSERT INTO dbo.csv([Activity ID], [Activity Name], [Total Cost], [Charge Code], [CAM], [Value Type]) values ( )", 
-                      row ['Activity ID'],
-                      row ['Aciivity Name'],
-                      row ['Total Cost'],
-                      row ['Charge Code'],
-                      row ['CAM'],
-                      row ['Value Type'])
-        
-        connStr.commit()
-    cursor.close()
-    connStr.close()
+    period_DataFrame.to_sql(period_DataFrame, con = engine, if_exisits = 'replace', index_labels = 'id')
+    
+    cum_DataFrame.to_sql(cum_DataFrame, con = engine, if_exisits = 'replace', index_labels = 'id')
