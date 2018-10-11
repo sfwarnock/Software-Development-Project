@@ -8,7 +8,6 @@ Created on Fri Sep 21 06:52:53 2018
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import pyodbc
 
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
@@ -19,7 +18,12 @@ def main():
     cum_Cost(cum_DataFrame, dateHeaderValues)
     cum_Schedule(cum_DataFrame, dateHeaderValues)
     bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
-    print (bac, bcwp, bcws, acwp, project_CPI.round(2), project_SPI.round(2), project_CV, project_SV)
+    percent_complete, bcwr = bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac)
+    print()
+    print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2))
+    print ()
+    print ("Project CPI:", project_CPI.round(2), "Project SPI", project_SPI.round(2), "Project Cost Variance:", '${:.{prec}f}'.format(project_CV, prec = 2), "Project Schedule Variance:", '${:.{prec}f}'.format(project_SV, prec = 2))
+    print()
     print (cum_DataFrame)
     data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
       
