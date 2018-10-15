@@ -8,6 +8,7 @@ Created on Fri Sep 21 06:52:53 2018
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas.api.types as ptypes
 
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
@@ -19,21 +20,27 @@ def main():
     cum_Schedule(cum_DataFrame, dateHeaderValues)
     bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
     percent_complete, bcwr = bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac)
-    eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, varaince_at_complete = estimate_at_complete(cum_DataFrame, 
+    eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, varainace_at_complete = estimate_at_complete(cum_DataFrame, 
                                                                                                                bcwr, bac, bcwp, 
-                                                                                                               acwp, project_CPI)
+                                                                                                               acwp, project_CPI,
+                                                                                                               project_CV)
     tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
-                performance_EAC, performance_tcpi, varaince_at_complete, cum_DataFrame)   
+                performance_EAC, performance_tcpi, varainace_at_complete, cum_DataFrame)   
     data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
       
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
     csv_header = csv_DataFrame.columns.values.tolist()
     dateHeaderValues = csv_DataFrame.columns.values[6:].tolist()
+    
+    assert len(dateHeaderValues) != 0; "No values in 'dateHeaderValues' list."
+    
     return csv_DataFrame, csv_header, dateHeaderValues
 
 def period_Data(csv_DataFrame, csv_header, dateHeaderValues):
+    assert ptypes.is_string_dtype(csv_DataFrame['Value Type']), "Datatypes in 'Value Types' are not strings" 
+    
     acwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'ACWP']
     acwp.loc['Period Total Cost', dateHeaderValues] = acwp[dateHeaderValues].sum()
     acwp['Total Actual Cost'] = acwp.loc[:,dateHeaderValues].sum(axis=1)
@@ -73,7 +80,7 @@ def period_Cost(period_DataFrame, dateHeaderValues):
     
     period_CPI = period_BCWP / period_ACWP
     period_CV = period_BCWP - period_ACWP
-    
+        
     period_DataFrame.loc['Period CV'] = period_CV
     period_DataFrame.loc['Period CPI'] = period_CPI
     return period_CPI, period_CV, period_ACWP
@@ -95,21 +102,24 @@ def filter_ChargeCode(period_DataFrame, cum_DataFrame, csv_DataFrame, csv_header
     filter_ChargeCode_cum = pd.pivot_table(cum_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
     return filter_ChargeCode_period, filter_ChargeCode_cum, filter_ChargeCode_csv
 
-def filter_CAM(period_DataFrame, cum_DataFrame, csv_DataFrame, csv_header):
+def filter_CAM(period_DataFrame, cum_DataFrame, csv_DataFrame, csv_header):    
     filter_CAM_csv = pd.pivot_table(csv_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
     filter_CAM_period = pd.pivot_table(period_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
     filter_CAM_cum = pd.pivot_table(cum_DataFrame, values = csv_header, index=['CAM','Charge Code' 'Value Type'])
+    
     return filter_CAM_csv, filter_CAM_period, filter_CAM_cum
 
 def cumulative_Data(period_DataFrame):
     cum_DataFrame = period_DataFrame
-
+    
     cum_DataFrame.loc['Cumulative Total Cost'] = cum_DataFrame.loc['Period Total Cost'].cumsum()
     cum_DataFrame.loc['Cumulative Planned Value'] = cum_DataFrame.loc['Period Total Planned'].cumsum()
     cum_DataFrame.loc['Cumulative Earned Value'] = cum_DataFrame.loc['Period Total Earned'].cumsum()
+        
     return cum_DataFrame
 
 def cum_Schedule(cum_DataFrame, dateHeaderValues):
+        
     cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
     cum_BCWS = cum_DataFrame.loc['Cumulative Planned Value', dateHeaderValues]
     
@@ -118,6 +128,7 @@ def cum_Schedule(cum_DataFrame, dateHeaderValues):
     
     cum_DataFrame.loc['SPI'] = cum_SPI
     cum_DataFrame.loc['SV'] = cum_SV
+        
     return cum_SV, cum_SPI, cum_BCWP, cum_BCWS
     
 def cum_Cost(cum_DataFrame, dateHeaderValues):
@@ -136,11 +147,15 @@ def project_reporting(cum_DataFrame):
     bcwp =cum_DataFrame.loc['Period Total Earned', 'Total Earned']
     acwp = cum_DataFrame.loc['Period Total Cost', 'Total Actual Cost']
     bcws = cum_DataFrame.loc['Period Total Planned', 'Total Planned']
+    
+    assert bac > 0, 'BAC contains no values'
+    assert bcws > 0, 'BCWS contains no values' 
         
     project_CPI = bcwp / acwp
     project_SPI = bcwp / bcws
     project_CV = bcwp - acwp
     project_SV = bcwp - bcws
+        
     return bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV
 
 def bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac):
@@ -148,14 +163,17 @@ def bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac):
     bcwr = bac - bcwp
     return percent_complete, bcwr
 
-def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI):
+def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, project_CV):
     eac = acwp + bcwr
     tcpi = bac / eac                            
     performance_ETC = acwp + (bcwr * project_CPI)  
     performance_EAC = acwp + performance_ETC        
     performance_tcpi = bac / performance_EAC
-    varaince_at_complete = bac - eac
-    return eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, varaince_at_complete
+    varaiance_at_complete = bac - eac
+    
+    assert varaiance_at_complete == project_CV, 'VAC and CV are not equal'
+    
+    return eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, varaiance_at_complete
 
 def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
@@ -200,12 +218,12 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     
 def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
-                performance_EAC, performance_tcpi, varaince_at_complete, cum_DataFrame): 
+                performance_EAC, performance_tcpi, varaiance_at_complete, cum_DataFrame): 
     print()
     print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), 
            "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), 
            "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:",'${:.{prec}f}'.format(eac, prec = 2), 
-           "VAC:",'${:.{prec}f}'.format(varaince_at_complete, prec = 2))
+           "VAC:",'${:.{prec}f}'.format(varaiance_at_complete, prec = 2))
     print ()
     print ("Project CPI:", project_CPI.round(2), "Project SPI", project_SPI.round(2), 
            "Project Cost Variance:",'${:.{prec}f}'.format(project_CV, prec = 2), 
