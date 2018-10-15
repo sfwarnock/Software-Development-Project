@@ -10,9 +10,13 @@ def project_reporting(cum_DataFrame):
     bcwp =cum_DataFrame.loc['Period Total Earned', 'Total Earned']
     acwp = cum_DataFrame.loc['Period Total Cost', 'Total Actual Cost']
     bcws = cum_DataFrame.loc['Period Total Planned', 'Total Planned']
+    
+    assert bac > 0, 'BAC contains no values'
+    assert bcws > 0, 'BCWS contains no values' 
         
     project_CPI = bcwp / acwp
     project_SPI = bcwp / bcws
     project_CV = bcwp - acwp
     project_SV = bcwp - bcws
+    
     return bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV

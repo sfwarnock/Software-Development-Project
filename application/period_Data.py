@@ -6,6 +6,8 @@ Created on Fri Sep 21 06:48:38 2018
 """
 
 def period_Data(csv_DataFrame, csv_header, headerValues):
+    assert ptypes.is_string_dtype(csv_DataFrame['Value Type']), "Datatypes in 'Value Types' are not strings" 
+    
     acwp = csv_DataFrame.loc[csv_DataFrame['Value Type'] == 'ACWP']
     acwp.loc['Period Total Cost', headerValues] = acwp[headerValues].sum()
     acwp['Total Actual Cost'] = acwp.loc[:,headerValues].sum(axis=1)
