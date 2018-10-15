@@ -1,7 +1,7 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 21 06:52:53 2018
-
 @author: Scott Warnock
 """
 
@@ -19,12 +19,12 @@ def main():
     cum_Schedule(cum_DataFrame, dateHeaderValues)
     bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
     percent_complete, bcwr = bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac)
-    print()
-    print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2))
-    print ()
-    print ("Project CPI:", project_CPI.round(2), "Project SPI", project_SPI.round(2), "Project Cost Variance:", '${:.{prec}f}'.format(project_CV, prec = 2), "Project Schedule Variance:", '${:.{prec}f}'.format(project_SV, prec = 2))
-    print()
-    print (cum_DataFrame)
+    eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, varaince_at_complete = estimate_at_complete(cum_DataFrame, 
+                                                                                                               bcwr, bac, bcwp, 
+                                                                                                               acwp, project_CPI)
+    tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
+                project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
+                performance_EAC, performance_tcpi, varaince_at_complete, cum_DataFrame)   
     data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
       
 def csv_Read():
@@ -153,9 +153,9 @@ def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI):
     tcpi = bac / eac                            
     performance_ETC = acwp + (bcwr * project_CPI)  
     performance_EAC = acwp + performance_ETC        
-    performance_tpci = bac / performance_EAC
+    performance_tcpi = bac / performance_EAC
     varaince_at_complete = bac - eac
-    return eac, tcpi, performance_ETC, performance_EAC, performance_tpci, varaince_at_complete
+    return eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, varaince_at_complete
 
 def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
@@ -198,4 +198,19 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
 
     plt.show()
     
+def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
+                project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
+                performance_EAC, performance_tcpi, varaince_at_complete, cum_DataFrame): 
+    print()
+    print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), 
+           "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), 
+           "EAC:",'${:.{prec}f}'.format(eac, prec = 2), "VAC:",'${:.{prec}f}'.format(varaince_at_complete, prec = 2))
+    print ()
+    print ("Project CPI:", project_CPI.round(2), "Project SPI", project_SPI.round(2), "Project Cost Variance:", 
+           '${:.{prec}f}'.format(project_CV, prec = 2), "Project Schedule Variance:", '${:.{prec}f}'.format(project_SV, prec = 2))
+    print()
+    print("TCPI:", tcpi.round(2), "Performace EAC:", '${:.{prec}f}'.format(performance_EAC, prec =2),
+          "Performance ETC:", '${:.{prec}f}'.format(performance_ETC, prec = 2), "Performance TCPI", '${:.{prec}f}'.format(performance_tcpi, prec = 2))
+    print()
+    print (cum_DataFrame)
 main()
