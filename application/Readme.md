@@ -51,8 +51,30 @@ The data from the CSV generates two indvidual pandas dataframes, one for period 
 completes with generating a bar graph for the period data by month and an S-curve line graph for the project cumalative data.
 
 ## Use
+Users can copy the program code and use in a Python IDE. The IDE used to develop the code was [Spyder IDE](https://www.spyder-ide.org/) 
+which comes installed through the [Anaconda Navigator Shell](https://www.anaconda.com/download/). It is recomended that users use the
+Spyder IDE to run the program as all the libraies used to run the program come pre-loaded (see Dependencies below for a list of
+libraries).
+
+Once downloaded the user can modifiy the program to read the their own csv file. The location of the read_csv() is the def csv_Read()
+function:
+```python
+def csv_Read():
+    csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
+    csv_header = csv_DataFrame.columns.values.tolist()
+    dateHeaderValues = csv_DataFrame.columns.values[6:].tolist()
+ 
+```
+As stated in the 'About' section above, the Version 1.0.0_2018.OCT.16 is a MVP demonstration program. Therefore the program is written
+to read from a CSV with a set number of headervalues. It is recomended users download the datafile.csv and run the project with the
+datefile to undestand how the program is processing the columns of the csv.
 
 ## Dependencies
+
+* Python 3.7
+* pandas 0.23.4
+* numpy 1.15.1
+* matplotlib 2.2.3
 
 ## Getting Help
 The backbone of the program is dependent on the pandas library. You can visit the [pandas github](https://github.com/pandas-dev/pandas/blob/master/README.md) 
