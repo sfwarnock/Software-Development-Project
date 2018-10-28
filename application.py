@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 21 06:52:53 2018
@@ -9,6 +8,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas.api.types as ptypes
+import urllib
+from sqlalchemy import create_engine
 
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
@@ -28,6 +29,7 @@ def main():
                 project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
                 performance_EAC, performance_tcpi, varainace_at_complete, cum_DataFrame)   
     data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
+    sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame)
       
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
@@ -234,4 +236,17 @@ def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
           '${:.{prec}f}'.format(performance_tcpi, prec = 2))
     print()
     print (cum_DataFrame)
+    
+def sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame):
+
+    params = urllib.parse.quote_plus('DRIVER={ODBC Driver 17 for SQL Server};SERVER={(LOCAL)\SQLEXPRESS};DATABASE={DATABASE NAME};Trusted_Connection=yes')
+
+    engine = create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
+
+    csv_DataFrame.to_sql('csv_DataFrame', engine, if_exists = 'replace')
+    
+    period_DataFrame.to_sql('period_DataFrame', engine, if_exists = 'replace')
+    
+    cum_DataFrame.to_sql('cum_DataFrame', engine, if_exists = 'replace')
+    
 main()
