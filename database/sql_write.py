@@ -14,8 +14,8 @@ def sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame):
 
     engine = create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
 
-    csv_DataFrame.to_sql(csv_DataFrame, engine, if_exisits = 'append', index_labels = 'id')
+    csv_DataFrame.to_sql('csv_DataFrame', engine, if_exists = 'replace')
     
-    #period_DataFrame.to_sql(period_DataFrame, con = engine, if_exisits = 'append', index_labels = 'id')
+    period_DataFrame.to_sql('period_DataFrame', engine, if_exists = 'replace')
     
-    #cum_DataFrame.to_sql(cum_DataFrame, con = engine, if_exisits = 'append', index_labels = 'id')
+    cum_DataFrame.to_sql('cum_DataFrame', engine, if_exists = 'replace')
