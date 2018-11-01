@@ -3,28 +3,43 @@
   <head>
     <title>Project Report</title>
     <style type = "text/css">
-      body{
-          background-color: rgb(119, 136, 153);}
+        *{
+          box-sizing: border-box;}
+        body{
+            background-color: rgb(119, 136, 153);}
         header{
-          font-family: Arial Black, Gadget, sans-serif;
-          color: rgb(0, 0, 0);
-          text-align: center;
-          background-color: rgb(255, 255, 255);}
+            font-family: Arial Black, Gadget, sans-serif;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            background-color: rgb(255, 255, 255);}
+        nav{
+          float: left;
+          width: 70%
+          background-color: rgb(0,0,0)}
+        article {
+          float: left;
+          width: 30%
+          background-color: rgb(128, 128, 128)}
+        section:{
+            font-family: Arial Black, Gadget, sans-serif;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            background-color: rgb(0, 0, 0);}
         h1 {
-          font-family: Arial Black, Gadget, sans-serif;
-          text-align: center;
-          color: rgb(0, 0, 0);
-          background-color: rgb(119, 136, 153);}
+            font-family: Arial Black, Gadget, sans-serif;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            background-color: rgb(119, 136, 153);}
         h2,h3 {
-          font-family: Arial, Helvetica, sans-serif;
-          text-align: center;
-          color: rgb(0, 0, 0);
-          background-color: rgb(176, 196, 222);}
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            background-color: rgb(176, 196, 222);}
         p {
-          font-family: "Times New Roman", Times, sans-serif;
-          text-align: center;
-          color: rgb(0, 0, 0);
-          background-color: rgb(255, 255, 255);}
+            font-family: "Times New Roman", Times, sans-serif;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            background-color: rgb(255, 255, 255);}
   </style>
   </head>
   <body>
@@ -32,16 +47,34 @@
       <p>Header Test</p>
     </header>
     <h1>Project Title</h1>
-      <p>Project WBS</p>
-      <p>Project Cumulative Metrics</p>
-      <p>Project Period Metrics</p>
-      <p>Project Percent Complete</P>
-      <h2>Project Status To-date</h2>
-        <p>Select CAM</p>
-        <p>Risk as a Vector</p>
-        <p>Project Metrics by Month</p>
-      <h2>Project Period Status</h2>
-        <p> Select CAM</p>
-        <p>Project Period Metrics by Month</p>
+    <section1>
+      <nav>
+        <p>Project Cumulative Metrics</p>
+        <p>Project Period Metrics</p>
+      </nav>
+      <article>
+        <p>Project WBS</p>
+        <p> Project Percent Complete</p>
+      </article>
+    </sectio1>
+    <section2>
+      <h1>Project Summary</h1>
+      <nav>
+        <h2>Project Status To-date</h2>
+          <p>Select CAM</p>
+          <p>Risk as a Vector</p>
+          <p>Project Metrics by Month</p>
+      </nav>
+    </section2>
+    <section3>
+      <nav>
+        <h2>Project Period Status</h2>
+          <p> Select CAM</p>
+          <p>Project Period Metrics by Month</p>
+      </nav>
+    </section3>
+    <footer>
+      <p>Footer</p>
+    </footer>
   </body>
 </html>
