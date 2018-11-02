@@ -13,23 +13,18 @@
             text-align: center;
             background-color: rgb(255, 255, 255);}
         .topnav {
-          text-align: right;
+          float: center;
+          display: block;
+          text-align: center;
           background-color: rgb(0,0,0)}
-        article {
+        .column {
           float: left;
-          width: 30%
-          background-color: rgb(128, 128, 128)}
-        section:{
-            display: flex;
-            font-family: Arial Black, Gadget, sans-serif;
-            color: rgb(0, 0, 0);
-            text-align: center;
-            background-color: rgb(0, 0, 0);}
-        h1 {
-            font-family: Arial Black, Gadget, sans-serif;
-            text-align: center;
-            color: rgb(0, 0, 0);
-            background-color: rgb(119, 136, 153);}
+          width: 75%
+          padding: 15px;}
+        .row: after{
+          content: "";
+          display: table;
+          clear: both;}
         h2,h3 {
             font-family: Arial, Helvetica, sans-serif;
             text-align: center;
@@ -49,18 +44,19 @@
     <div class="topnav">
       <h1>To other Projects</h1>
     </div>
-
-    <section>
-      <h1>Project Summary</h1>
-      <nav>
+    <h1>Project Summary</h1>
+    <div class = "row">
+      <div class = "column">
         <p>Project Cumulative Metrics</p>
         <p>Project Period Metrics</p>
-      </nav>
-      <article>
-        <p>Project WBS</p>
-        <p> Project Percent Complete</p>
-      </article>
-    </section>
+      </div>
+    <div class = "column">
+      <p>Project WBS</p>
+      <figure>
+        <img src = "DMO-2 Project Plan.jpg">
+      <p> Project Percent Complete</p>
+    </div>
+  </div>
 
     <!--<section2>
       <nav>
@@ -77,11 +73,11 @@
           <p> Select CAM</p>
           <p>Project Period Metrics by Month</p>
       </nav>
-    </section3>-->
+    </section3>
 
     <footer>
       <p>Footer</p>
-    </footer>
+    </footer>-->
 
   </body>
 </html>
