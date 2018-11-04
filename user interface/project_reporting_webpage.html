@@ -3,23 +3,27 @@
   <head>
     <title>Project Report</title>
     <style type = "text/css">
-        *{
-          box-sizing: border-box;}
-        body{
-            background-color: rgb(255, 255, 255);}
+        body {
+          width: 90%;
+          margin: 0 auto;}
         .header {
             font-family: Arial Black, Gadget, sans-serif;
             color: rgb(0, 0, 0);
             text-align: center;
             background-color: rgb(255, 255, 255);}
-        .topnav {
+        #.topnav {
           float: center;
           display: block;
           text-align: center;
-          background-color: rgb(255,255,255)}
-        .column {
-          float: center;
-          width: 75%
+          background-color: rgb(255,255,255)
+          padding: 10px;
+          margin: 10px:}
+        .leftcolumn {
+          float: left;
+          width: 66%;}
+        .righttcolumn {
+          float: left;
+          width: 33%
           padding: 15px;}
         .row: after{
           content: "";
@@ -42,19 +46,28 @@
         th {
           background-color: rgb(176, 196, 222);
           height: 25px;}
+        img {
+          float; right;}
   </style>
   </head>
 
   <body>
     <div class="header">
       <h1>Project Title</h1>
-    </div>
     <div class="topnav">
-      <h1>To other Projects</h1>
+      <ul>
+        <li><a href="">Project Portfolio</a></li>
+        <li><a href="">Engineering Management</a></li>
+        <li><a href="">Procuement Management</a></li>
+        <li><a href="">Construction Management</a></li>
+        <li><a href="">Risk Management</a></li>
+        <li><a href="">Project Closeout</a></li>
+      </ul>
+    </div>
     </div>
     <h2>Project Summary</h2>
     <div class = "row">
-      <div class = "column">
+      <div class = "leftcolumn">
         <p>Project Cumulative Metrics</p>
         <table>
           <tr>
@@ -116,9 +129,8 @@
           </tr>
         </table>
       </div>
-    <div class = "column">
+    <div class = "rightcolumn">
       <p>Project WBS</p>
-      <figure>
         <img src = "Project Plan.jpg">
       <p> Project Percent Complete</p>
     </div>
