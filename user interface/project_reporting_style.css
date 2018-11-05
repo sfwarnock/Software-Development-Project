@@ -2,7 +2,7 @@
   overflow: auto;
   height: 100%}
 body {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;}
 .header {
     font-family: Arial Black, Gadget, sans-serif;
@@ -16,14 +16,22 @@ body {
   background-color: rgb(255,255,255)
   padding: 10px, ;
   margin top: 20px:}
-.leftcolumn_project_to-date {
+.topcolumn_project_to-date {
   float: left;
   width: 620;
   margin: 10px;}
-.righttcolumn_project_WBSandRisk {
+.card_project_WBSandRisk{
   float: right;
   width: 300px
   padding: 10px;}
+.middletcolumn_project_scurve {
+  float: left;
+  width: 620;
+  margin: 10px;}
+.bottomcolumn_periodbarchart {
+  float: left;
+  width: 620;
+  margin: 10px;}
 .row: after{
   content: "";
   display: table;
