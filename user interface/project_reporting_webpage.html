@@ -3,6 +3,8 @@
   <head>
     <title>Project Report</title>
     <link href="project_reporting_style.css" type = "text/css" rel = "stylesheet"/>
+    <script type="text/javascript" src="project_reporting_get_data.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
   <body>
@@ -28,10 +30,10 @@
         <div class = "topcolumn_project_to-date">
           <div class = "card_project_WBSandRisk">
             <h2>Project Cumulative Metrics</h2>
-            <script type="text/javascript" src="project_reporting_get_data.js"></script>
             <table>
+            <thead>Project Eearned Value Metrics</thead>
               <tr>
-                <th>Total Buget</th>
+                <th>BAC</th>
                 <th>BCWS</th>
                 <th>% Complete</th>
                 <th>BCWP</th>
@@ -41,20 +43,7 @@
                 <th>CV</th>
                 <th>CPI</th>
               </tr>
-              <tr>
-                <div id="python_data"></div>
-                <script>
-                  document.getElementByID("python_data").innnerHTML = obj.BAC;
-                </script>
-                <td>PyJS</td>
-                <td>PyJS</td>
-                <td>PyJS</td>
-                <td>PyJS</td>
-                <td>PyJS</td>
-                <td>PyJS</td>
-                <td>PyJS</td>
-                <td>PyJS</td>
-              </tr>
+            </thead>
           </table>
           <p>Project To-Complete</p>
             <table>
