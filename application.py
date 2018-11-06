@@ -8,8 +8,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas.api.types as ptypes
-import urllib
-from sqlalchemy import create_engine
+#import urllib
+#from sqlalchemy import create_engine
 import json
 
 def main():
@@ -30,7 +30,7 @@ def main():
                 project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
                 performance_EAC, performance_tcpi, variance_at_complete, cum_DataFrame)   
     data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
-    sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame)
+    #sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame)
     data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
                 performance_EAC, performance_tcpi, variance_at_complete, cum_DataFrame)
@@ -242,14 +242,14 @@ def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     print (cum_DataFrame)
     
 
-def sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame):
+#def sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame):
 
-    params = urllib.parse.quote_plus('DRIVER={ODBC Driver 17 for SQL Server};SERVER={DESKTOP-7HC4GND\SQLEXPRESS};DATABASE={CU Software Development Project};Trusted_Connection=yes')
-    engine = create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
+    #params = urllib.parse.quote_plus('DRIVER={ODBC Driver 17 for SQL Server};SERVER={DESKTOP-7HC4GND\SQLEXPRESS};DATABASE={CU Software Development Project};Trusted_Connection=yes')
+    #engine = create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
 
-    csv_DataFrame.to_sql('csv_DataFrame', engine, if_exists = 'replace')
-    period_DataFrame.to_sql('period_DataFrame', engine, if_exists = 'replace', index = False)    
-    cum_DataFrame.to_sql('cum_DataFrame', engine, if_exists = 'replace', index = False)
+    #csv_DataFrame.to_sql('csv_DataFrame', engine, if_exists = 'replace')
+    #period_DataFrame.to_sql('period_DataFrame', engine, if_exists = 'replace', index = False)    
+    #cum_DataFrame.to_sql('cum_DataFrame', engine, if_exists = 'replace', index = False)
 
 def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
@@ -259,6 +259,7 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
 
     cumArray_toJSON = cum_DataFrame.loc[cum_DataFrame.index.isin(['Cumulative Planned Value', 'Cumulative Earned Value', 
                                                                   'Cumulative Total Cost'])].to_json(orient = 'index')
+    
     
     cum_todateUI_table = {"Budget at Complete": bac, "BCWP": bcwp, "Percent Complete": percent_complete,
                       "Bugeted Cost of Work Remaining": bcwr}
@@ -274,10 +275,9 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     cum_todateUI_table["Performance EAC"] = performance_EAC
     cum_todateUI_table["Perfromance TCPI"] = performance_tcpi
     cum_todateUI_table["VAC"] = variance_at_complete
-    cum_to_json = json.dumps(cum_todateUI_table, indent = 4)
+    with open('cum_json.txt', 'w') as outfile:
+        json.dump(cum_todateUI_table, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
     
-    print(cum_to_json)
-    
-    return periodArray_toJSON, cumArray_toJSON, cum_todateUI_table, cum_to_json
+    return periodArray_toJSON, cumArray_toJSON, cum_todateUI_table, #cum_to_json
 
 main()
