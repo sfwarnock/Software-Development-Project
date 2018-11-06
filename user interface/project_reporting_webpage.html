@@ -28,6 +28,7 @@
         <div class = "topcolumn_project_to-date">
           <div class = "card_project_WBSandRisk">
             <h2>Project Cumulative Metrics</h2>
+            <script type="text/javascript" src="project_reporting_get_data.js"></script>
             <table>
               <tr>
                 <th>Total Buget</th>
@@ -41,7 +42,10 @@
                 <th>CPI</th>
               </tr>
               <tr>
-                <td>PyJS</td>
+                <div id="python_data"></div>
+                <script>
+                  document.getElementByID("python_data").innnerHTML = obj.BAC;
+                </script>
                 <td>PyJS</td>
                 <td>PyJS</td>
                 <td>PyJS</td>
@@ -112,7 +116,7 @@
         <h2>Project S-cure</h2>
       </div>
     </div>
-    
+
         <div class = "card_project_WBSandRisk">
           <h3>Project WBS</h3>
           <img src = "Project Plan.jpg">

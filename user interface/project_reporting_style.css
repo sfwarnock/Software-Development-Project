@@ -36,6 +36,8 @@ body {
   content: "";
   display: table;
   clear: both;}
+#python_data{
+    float: center;}
 li {
   display: inline;
   padding: 5px}
