@@ -76,6 +76,10 @@ body {
     clear: both;
 }
 
+.responsive {
+    max-width: 100%;
+    height: auto;}
+
 /* Footer */
 .footer {
     padding: 20px;
