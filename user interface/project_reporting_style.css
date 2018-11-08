@@ -5,7 +5,7 @@
 body {
     font-family: Arial;
     padding: 10px;
-    background: #f1f1f1;
+    background: rgb(169, 169, 169);
 }
 
 /* Header/Blog Title */
@@ -51,7 +51,7 @@ body {
 .rightcolumn {
     float: left;
     width: 20%;
-    background-color: #f1f1f1;
+    background-color: rgb(169, 169, 169);
     padding-left: 20px;
 }
 
@@ -88,6 +88,11 @@ body {
     margin-top: 20px;
 }
 
+.tableheaderevm{
+  text-align: center;
+  border: 1px solid black;
+}
+
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
     .leftcolumn, .rightcolumn {
@@ -106,7 +111,7 @@ body {
 table {
   border-collapse: collapse;
   width: 100%;}
-table, td, th{
+table, td, th {
   text-align: center;
   border: 1px solid black;}
 th {
