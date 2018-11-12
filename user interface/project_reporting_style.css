@@ -117,3 +117,7 @@ table, td, th {
 th {
   background-color: rgb(176, 196, 222);
   height: 25px;}
+
+#table-1 th:first-child{
+  background-color: black;
+}
