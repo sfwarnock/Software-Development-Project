@@ -18,8 +18,15 @@ var jsonProjectEVM = {
 }
 
 var projectKeyValue = JSON.parse(jsonProjectEVM);
-var acwp = projectKeyValue["ACWP"];
-var bac = projectKeyValue["Budget at Complete"];
+var bac, bcws, percentComplete, bcwp, acwp, sv, spi, cv, cpi;
+acwp = projectKeyValue["ACWP"];
+bac = projectKeyValue["Budget at Complete"];
+percentComplete = projectKeyValue["percentComplete"];
 
-var elacwp = document.getElementById("ACWP");
-document.getElementById("BAC")
+var elacwp = document.getElementById('ACWP');
+elacwp.textContent = acwp
+var elbac = document.getElementById("BAC");
+
+var bcwr, etc, petc, eac, peac, tcpi, ptcpi, bac, vac;
+
+var periodBudget, periodBcws, periodPercentComplete, periodBCWP, periodACWP;
