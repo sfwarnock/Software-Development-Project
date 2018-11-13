@@ -21,5 +21,5 @@ var projectKeyValue = JSON.parse(jsonProjectEVM);
 var acwp = projectKeyValue["ACWP"];
 var bac = projectKeyValue["Budget at Complete"];
 
-document.getElementById("ACWP").innerHTML = acwp;
-document.getElementById("BAC").innerHTML = bac;
+var elacwp = document.getElementById("ACWP");
+document.getElementById("BAC")
