@@ -5,7 +5,7 @@
 body {
     font-family: Arial;
     padding: 10px;
-    background: rgb(169, 169, 169);
+    background: rgb(0, 0,0);
 }
 
 /* Header/Blog Title */
@@ -51,7 +51,7 @@ body {
 .rightcolumn {
     float: left;
     width: 20%;
-    background-color: rgb(169, 169, 169);
+    background-color: rgb(0, 0, 0);
     padding-left: 20px;
 }
 
@@ -64,7 +64,7 @@ body {
 
 /* Add a card effect for articles */
 .card {
-    background-color: white;
+    background-color: rgb(220, 220, 220);
     padding: 20px;
     margin-top: 20px;
 }
@@ -114,10 +114,16 @@ table {
 table, td, th {
   text-align: center;
   border: 1px solid black;}
-th {
-  background-color: rgb(176, 196, 222);
-  height: 25px;}
 
 #table-1 th:first-child{
-  background-color: black;
+  background-color: rgb(250, 215, 0);
+}
+
+th {
+  background-color: rgb(176, 196, 222);
+  height: 25px;
+}
+
+td{
+  background-color: white;
 }
