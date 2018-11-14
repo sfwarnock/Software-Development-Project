@@ -1,4 +1,4 @@
-var jsonProjectEVM = {
+{
     "ACWP": 240600.0,
     "BCWP": 195400.0,
     "BCWS": 190400.0,
@@ -15,7 +15,4 @@ var jsonProjectEVM = {
     "SV": 5000.0,
     "TCPI": 0.9266709928617781,
     "VAC": -45200.0
-};
-
-acwp = (jsonProjectEVM).ACWP;
-document.write(acwp);
+}

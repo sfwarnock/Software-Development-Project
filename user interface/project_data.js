@@ -1,19 +1,9 @@
-var project_todate = $.getJSON( "cum_json.txt", function(data) {
+var project_todate = $.getJSON( "cum_json.json", function(data) {
 	console.log(data);
 });
 
+acwp = project_todate.ACWP;
+bcwp = project_todate.BCWP;
 
-var projectKeyValue = JSON.parse(project_todate;
-var bac, bcws, percentComplete, bcwp, acwp, sv, spi, cv, cpi;
-acwp = projectKeyValue["ACWP"];
-bac = projectKeyValue["Budget at Complete"];
-percentComplete = projectKeyValue["percentComplete"];
-bcwp = projectKeyValue["BCWP"];
-sv = projectKeyValue["SV"];
-spi = projectKeyValue["SPI"];
-cv = projectKeyValue["CV"];
-cpi = projectKeyValue["CPI"];
-
-var elacwp = document.getElementById('ACWP');
-elacwp.textContent = acwp;
-var elbac = document.getElementById("BAC");
+document.write(acwp);
+document.write(bcwp);
