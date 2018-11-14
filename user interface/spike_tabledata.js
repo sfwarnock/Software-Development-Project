@@ -17,5 +17,5 @@ var jsonProjectEVM = {
     "VAC": -45200.0
 };
 
-acwp = (jsonProjectEVM).ACWP;
+acwp = (jsonProjectEVM)['Percent Complete'];
 document.write(acwp);
