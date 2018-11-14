@@ -186,7 +186,7 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     cum_ACWP = cum_DataFrame.loc['Cumulative Total Cost', dateHeaderValues]
     cum_BCWS = cum_DataFrame.loc['Cumulative Planned Value', dateHeaderValues]
     
-    plt.style.use('dark_background')
+    plt.style.use('classic')
     
     fig, ax = plt.subplots()
     ax.plot(cum_ACWP, color = "Green")
@@ -195,7 +195,8 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
 
     ax.set(xlabel='Month', ylabel= '$', title= 'Project S-Curve')
     ax.grid(False)
-    ax.legend()
+    ax.legend(loc = 4)
+    plt.savefig('s-curve.png', dpi = 100)
     plt.show()
     
     
@@ -220,6 +221,7 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     ax.grid(False)
     ax.legend()
 
+    plt.savefig('bar-chart.png', dpi = 100)
     plt.show()
     
 def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
@@ -275,7 +277,7 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     cum_todateUI_table["Performance EAC"] = performance_EAC
     cum_todateUI_table["Perfromance TCPI"] = performance_tcpi
     cum_todateUI_table["VAC"] = variance_at_complete
-    with open('cum_json.txt', 'w') as outfile:
+    with open('cum_json.json', 'w') as outfile:
         json.dump(cum_todateUI_table, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
     
     return periodArray_toJSON, cumArray_toJSON, cum_todateUI_table, #cum_to_json
