@@ -1,8 +1,9 @@
-var project_todate = $.getJSON( "cum_json.json", function(data) {
+let project_todate = $.getJSON( "cum_json.json", function(data) {
 	console.log(data);
 });
 
-acwp = (project_todate)['ACWP'];
+awcp = document.getElementById('acwp')
+var acwp = project_todate['ACWP'];
 bcwp = (project_todate)['BCWP'];
 bcws = (project_todate)['BCWS'];
 bac = (project_todate)['Budget at Complete'];
@@ -19,7 +20,7 @@ sv = (project_todate)['SV'];
 tcpi = (project_todate)['TCPI'];
 vac = (project_todate)['VAC'];
 
-document.write(acwp);
+
 document.write(bcwp);
 document.write(bac);
 document.write(bcws);
