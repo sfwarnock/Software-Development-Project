@@ -5,7 +5,8 @@
     <title>Project Report</title>
     <link href="project_reporting_style.css" type = "text/css" rel = "stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="project_data.js"></script>
+    <script type="text/javascript" src="project_data.js"></script>
+    <script type="text/javascript" src="progress_bars.js"></script>
   </head>
 
   <body>
@@ -117,13 +118,21 @@
           <p>Period Earned Value Metrics</p>
         </div>
       </div>
-
       <div class="rightcolumn">
       <div class="card">
         <h3>Project Percent Complete</h3>
-        <div class="fakeimg"><p>% Complete Image</p></div>
+        <div id="container_cirlce"></div>
+        <p>Project Planning</p>
+        <div id="container_bar1"></div>
+        <p>Requirements Engineering</p>
+        <p>bar % Complete</p>
+        <p>Software Development</p>
+        <p>bar % Complete</p>
+        <p>Software Testing and Quality Assurance</p>
+        <p>bar % Complete</p>
+        <p>Software Release</p>
+        <p>bar % Complete</p>
         </div>
-
       <div class="card">
         <h3>Project Risk Tracking</h3>
         <div class="fakeimg"><p>Risk as a Vector Image Here</p></div>
