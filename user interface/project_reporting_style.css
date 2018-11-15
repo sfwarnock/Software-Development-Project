@@ -130,9 +130,16 @@ td{
   width: 400px;
 }
 
-#container {
+#container_bar1{
   margin: 20px;
   width: 400px;
   height: 8px;
+  position: relative;
+}
+
+#container_circle {
+  margin: 20px;
+  width: 200px;
+  height: 200px;
   position: relative;
 }
