@@ -8,7 +8,7 @@ var project_todate = {
     "BCWS": 190400.0,
     "Budget at Complete": 571200.0,
     "Bugeted Cost of Work Remaining": 375800.0,
-    "CPI": 0.812136325852036,
+    "CPI": 0.8121363258520365,
     "CV": -45200.0,
     "EAC": 616400.0,
     "Percent Complete": 0.34208683473389356,
@@ -22,49 +22,49 @@ var project_todate = {
 };
 
 var acwp = document.getElementById('acwp');
-acwp.textContent = project_todate['ACWP'];
+acwp.textContent = '$ ' + parseFloat(Math.round(project_todate['ACWP']*100) / 100).toFixed(2);
 
 var bcwp = document.getElementById('bcwp');
-bcwp.textContent = project_todate['BCWP'];
+bcwp.textContent = '$ ' + parseFloat(Math.round(project_todate['BCWP']*100) / 100).toFixed(2);
 
 var bcws = document.getElementById('bcws');
-bcws.textContent = '$' + project_todate['BCWS'];
+bcws.textContent = '$ ' + parseFloat(Math.round(project_todate['BCWS']*100) / 100).toFixed(2);
 
 var bac = document.getElementById('bac');
-bac.textContent = project_todate['Budget at Complete'];
+bac.textContent = '$ ' + parseFloat(Math.round(project_todate['Budget at Complete']*100) / 100).toFixed(2);
 
 var bcwr = document.getElementById('bcwr');
-bcwr.textContent = project_todate['Budget Cost of Work Remaining'];
+bcwr.textContent = '$ ' + parseFloat(Math.round(project_todate['Bugeted Cost of Work Remaining']*100) / 100).toFixed(2);
 
 var cpi = document.getElementById('cpi');
-cpi.textContent = project_todate['CPI'];
+cpi.textContent = parseFloat(Math.round(project_todate['CPI']*100)/100).toFixed(2);
 
 var cv = document.getElementById('cv');
-cv.textContent = project_todate['CV'];
+cv.textContent = '$ ' + parseFloat(Math.round(project_todate['CV']*100) / 100).toFixed(2);
 
 var eac = document.getElementById('eac');
-eac.textContent = project_todate['EAC'];
+eac.textContent = '$ ' + parseFloat(Math.round(project_todate['EAC']*100) / 100).toFixed(2);
 
 var percentcom = document.getElementById('percentcom');
-percentcom.textContent = project_todate['Percent Complete'];
+percentcom.textContent = parseFloat(Math.round(project_todate['Percent Complete'] *100) / 100).toFixed(4) * 100;
 
 var peac = document.getElementById('peac');
-peac.textContent = project_todate['Performance EAC'];
+peac.textContent = '$ ' + parseFloat(Math.round(project_todate['Performance EAC']*100) / 100).toFixed(2);
 
-var petc = document.getElementById('petc');
-ptec.textContent = project_todate['Performance ETC'];
+var petc = document.getElementById('peac');
+petc.textContent = '$ ' + parseFloat(Math.round(project_todate['Performance ETC']*100) / 100).toFixed(2);
 
 var ptcpi = document.getElementById('ptcpi');
-tcpi.textContent = project_todate['Perfromance TCPI'];
+tcpi.textContent = parseFloat(Math.round(project_todate['Perfromance TCPI']*100) / 100).toFixed(2);
 
 var spi = document.getElementById('spi');
-spi.textContent = project_todate['SPI'];
+spi.textContent = parseFloat(Math.round(project_todate['SPI']*100) / 100).toFixed(2);
 
 var sv = document.getElementById('sv');
-sv.textContent = project_todate['SV'];
+sv.textContent = '$ ' + parseFloat(Math.round(project_todate['SV']*100) /100).toFixed(2);
 
 var tcpi = document.getElementById('tcpi');
-tcpi.textContent = project_todate['TCPI'];
+tcpi.textContent = parseFloat(Math.round(project_todate['TCPI']*100) / 100).toFixed(2);
 
 var vac = document.getElementById('vac');
-vac.textContent = '$' + project_todate['VAC'];
+vac.textContent = '$' + parseFloat(Math.round(project_todate['VAC']*100) / 100).tofixed(2);
