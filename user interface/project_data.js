@@ -51,11 +51,11 @@ percentcom.textContent = parseFloat(Math.round(project_todate['Percent Complete'
 var peac = document.getElementById('peac');
 peac.textContent = '$ ' + parseFloat(Math.round(project_todate['Performance EAC']*100) / 100).toFixed(2);
 
-var petc = document.getElementById('peac');
+var petc = document.getElementById('petc');
 petc.textContent = '$ ' + parseFloat(Math.round(project_todate['Performance ETC']*100) / 100).toFixed(2);
 
 var ptcpi = document.getElementById('ptcpi');
-tcpi.textContent = parseFloat(Math.round(project_todate['Perfromance TCPI']*100) / 100).toFixed(2);
+ptcpi.textContent = parseFloat(Math.round(project_todate['Perfromance TCPI']*100) / 100).toFixed(2);
 
 var spi = document.getElementById('spi');
 spi.textContent = parseFloat(Math.round(project_todate['SPI']*100) / 100).toFixed(2);
@@ -67,4 +67,7 @@ var tcpi = document.getElementById('tcpi');
 tcpi.textContent = parseFloat(Math.round(project_todate['TCPI']*100) / 100).toFixed(2);
 
 var vac = document.getElementById('vac');
-vac.textContent = '$' + parseFloat(Math.round(project_todate['VAC']*100) / 100).tofixed(2);
+vac.textContent = '$' + parseFloat(Math.round(project_todate['VAC']*100) / 100).toFixed(2);
+
+var etc = document.getElementById('etc');
+etc.textContent = '$ ' + parseFloat(Math.round(project_todate['Bugeted Cost of Work Remaining']*100) / 100).toFixed(2);
