@@ -33,6 +33,9 @@ bcws.textContent = '$ ' + parseFloat(Math.round(project_todate['BCWS']*100) / 10
 var bac = document.getElementById('bac');
 bac.textContent = '$ ' + parseFloat(Math.round(project_todate['Budget at Complete']*100) / 100).toFixed(2);
 
+var totalbudget = document.getElementById('totalbudget');
+totalbudget.textContent = '$ ' + parseFloat(Math.round(project_todate['Budget at Complete']*100) / 100).toFixed(2);
+
 var bcwr = document.getElementById('bcwr');
 bcwr.textContent = '$ ' + parseFloat(Math.round(project_todate['Bugeted Cost of Work Remaining']*100) / 100).toFixed(2);
 
