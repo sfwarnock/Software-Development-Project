@@ -74,3 +74,6 @@ vac.textContent = '$' + parseFloat(Math.round(project_todate['VAC']*100) / 100).
 
 var etc = document.getElementById('etc');
 etc.textContent = '$ ' + parseFloat(Math.round(project_todate['Bugeted Cost of Work Remaining']*100) / 100).toFixed(2);
+
+var reportingpercent = document.getElementById('reportingpercent');
+reportingpercent.textContent = parseFloat(Math.round(project_todate['Percent Complete'] *100) / 100).toFixed(4) * 100 + '%';
