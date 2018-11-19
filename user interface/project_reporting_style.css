@@ -12,7 +12,7 @@ body {
 .header {
     padding: 30px;
     text-align: center;
-    background-color: rgb(6, 56, 82);
+    background-color: #336B87;
     color: rgb(255, 255, 255);
 }
 
@@ -66,7 +66,7 @@ body {
 /* Add a card effect for articles */
 .card {
     color: rgb(255, 255, 255);
-    background-color: rgb(1, 26, 39);
+    background-color: #2A3132;
     padding: 20px;
     margin-top: 20px;
 }
@@ -121,7 +121,7 @@ table, td, th {
   font-size: 18px;
   color: rgb(255, 255, 255);
   height: 30px;
-  background-color: rgb(6, 56, 82);
+  background-color: #763626;
 }
 
 #table-2 th{
@@ -129,7 +129,7 @@ table, td, th {
   height: 25px
   width: 400px;
   color: rgb(0, 0, 0);
-  background-color: rgb(240, 129, 15);
+  background-color: #90AFC5;
 }
 
 #table-3 th{
@@ -137,7 +137,7 @@ table, td, th {
   height: 25px
   width: 400px;
   color: rgb(0, 0, 0);
-  background-color: rgb(230, 223, 68);
+  background-color: #90AFC5;
 }
 
 #table-4 th{
@@ -145,7 +145,7 @@ table, td, th {
   height: 25px
   width: 400px;
   color: rgb(0, 0, 0);
-  background-color: rgb(240, 129, 15);
+  background-color: #90AFC5;
 }
 td{
   font-size: 16px;
