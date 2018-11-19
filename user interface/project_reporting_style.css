@@ -153,9 +153,7 @@ td{
   width: 400px;
 }
 
-#container {
-  margin: 20px;
-  width: 400px;
-  height: 8px;
-  position: relative;
+#p_one p{
+  font-size: 30px;
+  text-align: center;
 }
