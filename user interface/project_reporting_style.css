@@ -118,14 +118,14 @@ table, td, th {
   border: 1px solid black;}
 
 #table-1 th:first-child{
-  font-size: 18px;
+  font-size: 20px;
   color: rgb(255, 255, 255);
   height: 30px;
   background-color: #763626;
 }
 
 #table-2 th{
-  font-size: 16px;
+  font-size: 18px;
   height: 25px
   width: 400px;
   color: rgb(0, 0, 0);
@@ -133,7 +133,7 @@ table, td, th {
 }
 
 #table-3 th{
-  font-size: 16px;
+  font-size: 18px;
   height: 25px
   width: 400px;
   color: rgb(0, 0, 0);
@@ -148,7 +148,7 @@ table, td, th {
   background-color: #90AFC5;
 }
 td{
-  font-size: 16px;
+  font-size: 18px;
   background-color: white;
   width: 400px;
 }
@@ -162,15 +162,15 @@ td{
   font-size: 15px;
 }
 
-.container_phasescomplete{
-
-
-}
-
-.align_left p{
+#textcontainer p{
+  display: block;
   float: left;
 }
 
-.align_right p{
+#align_left p{
+  float: left;
+}
+
+#align_right p{
   flaot: right;
 }
