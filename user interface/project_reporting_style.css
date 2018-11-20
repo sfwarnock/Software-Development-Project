@@ -174,3 +174,23 @@ td{
 #align_right p{
   flaot: right;
 }
+
+#project_phase {
+    box-sizing: border-box;
+    width: 300px;
+    height: 75px;
+    border: 3px solid black;
+    text-align: center;
+    background-color: rgb(240, 201, 15);
+    color: black;
+}
+
+#project_controlAccount {
+  box-sizing: border-box;
+  width: 250px;
+  height: 35px;
+  border: 3px solid black;
+  text-align: center;
+  background-color: rgb(0, 102, 204);
+  color: black;
+}
