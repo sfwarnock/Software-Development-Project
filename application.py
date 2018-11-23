@@ -182,7 +182,7 @@ def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, proj
     
     assert variance_at_complete == project_CV, 'VAC and CV are not equal'
     
-    return eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, variance_at_complete
+    return '${:.{prec}f}'.format(eac, prec = 2),tcpi.round(2), performance_ETC,performance_tcpi, performance_EAC, variance_at_complete
 
 def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
@@ -233,16 +233,16 @@ def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     print()
     print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), 
            "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), 
-           "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:",'${:.{prec}f}'.format(eac, prec = 2), 
+           "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:", 
            "VAC:",'${:.{prec}f}'.format(variance_at_complete, prec = 2))
     print ()
     print ("Project CPI:", project_CPI.round(2), "Project SPI", project_SPI.round(2), 
            "Project Cost Variance:",'${:.{prec}f}'.format(project_CV, prec = 2), 
            "Project Schedule Variance:", '${:.{prec}f}'.format(project_SV, prec = 2))
     print()
-    print("TCPI:", tcpi.round(2), "Performace EAC:", '${:.{prec}f}'.format(performance_EAC, prec =2),
-          "Performance ETC:", '${:.{prec}f}'.format(performance_ETC, prec = 2), "Performance TCPI", 
-          '${:.{prec}f}'.format(performance_tcpi, prec = 2))
+    print("TCPI:", "Performace EAC:", '${:.{prec}f}'.format(performance_EAC, prec =2),
+          "Performance ETC:", '${:.{prec}f}'.format(performance_ETC, prec = 2), "Performance TCPI".format(performance_tcpi, prec = 2), 
+          '${:.{prec}f}')
     print()
     print (cum_DataFrame)
     
