@@ -32,9 +32,6 @@ function loadData(project_todate) {
   var etc = document.getElementById('etc');
   etc.textContent = '$ ' + parseFloat(project_todate['ETC']).toLocaleString('en');
 
-  var etc = document.getElementById('etc');
-  etc.textContent = '$ ' + parseFloat(project_todate['ETC']).toLocaleString('en');
-
   var percentcom = document.getElementById('percentcom');
   percentcom.textContent = parseFloat(Math.round(project_todate['PerComp'] *100) / 100).toFixed(4) * 100;
 
