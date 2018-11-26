@@ -174,7 +174,7 @@ def bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac):
 
 def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, project_CV, project_SPI):
 
-    eac_general = bac /  project_CPI                            
+    eac_general = (bac / project_CPI)                            
     eac_CPI = (acwp + (bcwr / project_CPI))  
     eac_Composite = acwp + (bcwr/(project_CPI * project_SPI))    
 
@@ -235,7 +235,7 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
 def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, 
                 tcpi_EAC, variance_at_complete, cum_DataFrame): 
-    print()
+    print(eac_general, eac_CPI, eac_Composite)
     print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), 
            "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), 
            "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:",'${:.{prec}f}'.format(eac_general, prec = 2), 
@@ -282,7 +282,7 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
                       "BCWR": bcwr}
     cum_todateUI_table["BCWS"] = bcws
     cum_todateUI_table["ACWP"] = acwp
-    cum_todateUI_table["EAC"] = eac_general
+    cum_todateUI_table["EAC_General"] = eac_general
     cum_todateUI_table["EAC_Composite"] = eac_Composite
     cum_todateUI_table["EAC_CPI"] = eac_CPI 
     cum_todateUI_table["CPI"] = project_CPI
