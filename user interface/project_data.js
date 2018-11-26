@@ -24,13 +24,13 @@ function loadData(project_todate) {
   cv.textContent = '$ ' + parseFloat(project_todate['CV']).toLocaleString('en');
 
   var eac = document.getElementById('eac');
-  eac.textContent = '$ ' + parseFloat(project_todate['EAC']).toLocaleString('en');
+  eac.textContent = '$ ' + parseFloat(project_todate['EAC']).toLocaleString();
 
   var percentcom = document.getElementById('percentcom');
   percentcom.textContent = parseFloat(Math.round(project_todate['PerComp'] *100) / 100).toFixed(4) * 100;
 
   var peac = document.getElementById('peac');
-  peac.textContent = '$ ' + parseFloat(project_todate['PEAC']).toLocaleString('en');
+  peac.textContent = '$ ' + parseFloat(project_todate['PEAC']).toLocaleString();
 
   var petc = document.getElementById('petc');
   petc.textContent = '$ ' + parseFloat(project_todate['PETC']).toLocaleString('en');
