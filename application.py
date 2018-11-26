@@ -22,21 +22,21 @@ def main():
     cum_Schedule(cum_DataFrame, dateHeaderValues)
     bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
     percent_complete, bcwr = bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac)
-    eac, tcpi, performance_ETC, performance_EAC, performance_tcpi, variance_at_complete, eac_general = estimate_at_complete(cum_DataFrame, 
-                                                                                                               bcwr, bac, bcwp, 
-                                                                                                               acwp, project_CPI,
-                                                                                                               project_CV)
+    eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, tcpi_EAC, variance_at_complete = estimate_at_complete(cum_DataFrame, 
+                                                                                                              bcwr, bac, bcwp, 
+                                                                                                              acwp, project_CPI,
+                                                                                                              project_CV, project_SPI)
     
     tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
-                project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
-                performance_EAC, performance_tcpi, variance_at_complete, cum_DataFrame)   
+                project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, 
+                tcpi_EAC, variance_at_complete, cum_DataFrame)   
     data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
     #sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame) 
     data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
-                project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
-                performance_EAC, performance_tcpi, variance_at_complete, cum_DataFrame,
+                project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, tcpi_BAC, tcpi_EAC, 
+                variance_at_complete, etc, cum_DataFrame,
                 period_BCWS, period_BCWP, period_ACWP, period_SPI, period_SV, period_CPI,
-                period_CV, eac_general)
+                period_CV)
     
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
@@ -172,18 +172,22 @@ def bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac):
     bcwr = bac - bcwp
     return percent_complete, bcwr
 
-def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, project_CV):
-    eac = acwp + bcwr
-    tcpi = bac / eac
+def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, project_CV, project_SPI):
+
     eac_general = bac /  project_CPI                            
-    performance_ETC = acwp + (bcwr / project_CPI)  
-    performance_EAC = acwp + performance_ETC        
-    performance_tcpi = bac / performance_EAC
-    variance_at_complete = bac - eac
+    eac_CPI = (acwp + (bcwr / project_CPI))  
+    eac_Composite = acwp + (bcwr/(project_CPI * project_SPI))    
+
+    etc = eac_general - acwp
     
-    assert variance_at_complete == project_CV, 'VAC and CV are not equal'
+    tcpi_BAC = bac / eac_Composite
+    tcpi_EAC = bac / (eac_general - acwp)
     
-    return eac, tcpi, performance_ETC,performance_tcpi, performance_EAC, variance_at_complete, eac_general
+    variance_at_complete = bac - eac_general
+    
+    #assert variance_at_complete == project_CV, 'VAC and CV are not equal'
+    
+    return eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, tcpi_EAC, variance_at_complete
 
 def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
@@ -229,20 +233,20 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     plt.show()
     
 def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
-                project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
-                performance_EAC, performance_tcpi, variance_at_complete, cum_DataFrame): 
+                project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, 
+                tcpi_EAC, variance_at_complete, cum_DataFrame): 
     print()
     print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), 
            "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), 
-           "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:",'${:.{prec}f}'.format(eac, prec = 2), 
+           "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:",'${:.{prec}f}'.format(eac_general, prec = 2), 
            "VAC:",'${:.{prec}f}'.format(variance_at_complete, prec = 2))
     print ()
     print ("Project CPI:", project_CPI.round(2), "Project SPI", project_SPI.round(2), 
            "Project Cost Variance:",'${:.{prec}f}'.format(project_CV, prec = 2), 
            "Project Schedule Variance:", '${:.{prec}f}'.format(project_SV, prec = 2))
     print()
-    print("TCPI:", "Performance EAC:", '${:.{prec}f}'.format(performance_EAC, prec =2),
-          "Performance ETC:", '${:.{prec}f}'.format(performance_ETC, prec = 2), "Performance TCPI".format(performance_tcpi, prec = 2))
+    print("TCPI:", print(tcpi_EAC), "EAC(CPI):", '${:.{prec}f}'.format(eac_CPI, prec =2),
+          "Performance ETC:", '${:.{prec}f}'.format(etc, prec = 2), "Performance TCPI".format(tcpi_BAC, prec = 2))
     print()
     print (cum_DataFrame)
     
@@ -257,10 +261,11 @@ def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     #cum_DataFrame.to_sql('cum_DataFrame', engine, if_exists = 'replace', index = False)
 
 def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
-                project_SV, percent_complete, bcwr, eac, tcpi, performance_ETC, 
-                performance_EAC, performance_tcpi, variance_at_complete, cum_DataFrame,
+                project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, tcpi_BAC, tcpi_EAC, 
+                variance_at_complete, etc, cum_DataFrame,
                 period_BCWS, period_BCWP, period_ACWP, period_SPI, period_SV, period_CPI,
-                period_CV, eac_general):
+                period_CV):
+    
     periodArray_toJSON = cum_DataFrame.loc[cum_DataFrame.index.isin(['Period Total Planned', 'Period Total Earned', 
                                                                      'Period Total Cost'])].to_json(orient = 'index')
     with open('periodArray_toJSON.json', 'w') as outfile:
@@ -277,17 +282,17 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
                       "BCWR": bcwr}
     cum_todateUI_table["BCWS"] = bcws
     cum_todateUI_table["ACWP"] = acwp
-    cum_todateUI_table["EAC"] = eac
-    cum_todateUI_table["TCPI"] = tcpi
+    cum_todateUI_table["EAC"] = eac_general
+    cum_todateUI_table["EAC_Composite"] = eac_Composite
+    cum_todateUI_table["EAC_CPI"] = eac_CPI 
     cum_todateUI_table["CPI"] = project_CPI
     cum_todateUI_table["SPI"] = project_SPI
     cum_todateUI_table["CV"] = project_CV
     cum_todateUI_table["SV"] = project_SV
-    cum_todateUI_table["PETC"] = performance_ETC
-    cum_todateUI_table["PEAC"] = performance_EAC
-    cum_todateUI_table["PTCPI"] = performance_tcpi
-    cum_todateUI_table["VAC"] = variance_at_complete
-    cum_todateUI_table["EAC_G"] = eac_general
+    cum_todateUI_table["ETC"] = etc
+    cum_todateUI_table["TCPI_EAC"] = tcpi_EAC
+    cum_todateUI_table["TCPI_BAC"] = tcpi_BAC
+    cum_todateUI_table["VAC"] = variance_at_complete 
     #cum_todateUI_table["PerBCWS"] = period_BCWS
     #cum_todateUI_table["PerPerComp"] =
     #cum_todateUI_table["PerBCWP"] = period_BCWP
