@@ -44,10 +44,10 @@ function loadData(project_todate) {
   var sv = document.getElementById('sv');
   sv.textContent = '$ ' + parseFloat(project_todate['SV']).toLocaleString('en');
 
-  var tcpi_bac = document.getElementById('tcp_bac');
+  var tcpi_bac = document.getElementById('tcpi_bac');
   tcpi_bac.textContent = parseFloat(Math.round(project_todate['TCPI_BAC']*100) / 100).toFixed(2);
 
-  var tcpi_eac = document.getElementById('tcp_eac');
+  var tcpi_eac = document.getElementById('tcpi_eac');
   tcpi_eac.textContent = parseFloat(Math.round(project_todate['TCPI_EAC']*100) / 100).toFixed(2);
 
   var vac = document.getElementById('vac');
