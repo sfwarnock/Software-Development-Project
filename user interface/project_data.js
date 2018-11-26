@@ -1,4 +1,3 @@
-
 function loadData(project_todate) {
   var acwp = document.getElementById('acwp');
   acwp.textContent = '$ ' + parseFloat(Math.round(project_todate['ACWP']*100) / 100).toFixed(2);
@@ -10,13 +9,13 @@ function loadData(project_todate) {
   bcws.textContent = '$ ' + parseFloat(Math.round(project_todate['BCWS']*100) / 100).toFixed(2);
 
   var bac = document.getElementById('bac');
-  bac.textContent = '$ ' + parseFloat(Math.round(project_todate['Budget at Complete']*100) / 100).toFixed(2);
+  bac.textContent = '$ ' + parseFloat(Math.round(project_todate['BAC']*100) / 100).toFixed(2);
 
   var totalbudget = document.getElementById('totalbudget');
-  totalbudget.textContent = '$ ' + parseFloat(Math.round(project_todate['Budget at Complete']*100) / 100).toFixed(2);
+  totalbudget.textContent = '$ ' + parseFloat(Math.round(project_todate['BAC']*100) / 100).toFixed(2);
 
   var bcwr = document.getElementById('bcwr');
-  bcwr.textContent = '$ ' + parseFloat(Math.round(project_todate['Bugeted Cost of Work Remaining']*100) / 100).toFixed(2);
+  bcwr.textContent = '$ ' + parseFloat(Math.round(project_todate['BCWR']*100) / 100).toFixed(2);
 
   var cpi = document.getElementById('cpi');
   cpi.textContent = parseFloat(Math.round(project_todate['CPI']*100)/100).toFixed(2);
@@ -28,16 +27,16 @@ function loadData(project_todate) {
   eac.textContent = '$ ' + parseFloat(Math.round(project_todate['EAC']*100) / 100).toFixed(2);
 
   var percentcom = document.getElementById('percentcom');
-  percentcom.textContent = parseFloat(Math.round(project_todate['Percent Complete'] *100) / 100).toFixed(4) * 100;
+  percentcom.textContent = parseFloat(Math.round(project_todate['PerComp'] *100) / 100).toFixed(4) * 100;
 
   var peac = document.getElementById('peac');
-  peac.textContent = '$ ' + parseFloat(Math.round(project_todate['Performance EAC']*100) / 100).toFixed(2);
+  peac.textContent = '$ ' + parseFloat(Math.round(project_todate['PEAC']*100) / 100).toFixed(2);
 
   var petc = document.getElementById('petc');
-  petc.textContent = '$ ' + parseFloat(Math.round(project_todate['Performance ETC']*100) / 100).toFixed(2);
+  petc.textContent = '$ ' + parseFloat(Math.round(project_todate['PETC']*100) / 100).toFixed(2);
 
   var ptcpi = document.getElementById('ptcpi');
-  ptcpi.textContent = parseFloat(Math.round(project_todate['Perfromance TCPI']*100) / 100).toFixed(2);
+  ptcpi.textContent = parseFloat(Math.round(project_todate['PTCPI']*100) / 100).toFixed(2);
 
   var spi = document.getElementById('spi');
   spi.textContent = parseFloat(Math.round(project_todate['SPI']*100) / 100).toFixed(2);
@@ -52,10 +51,10 @@ function loadData(project_todate) {
   vac.textContent = '$' + parseFloat(Math.round(project_todate['VAC']*100) / 100).toFixed(2);
 
   var etc = document.getElementById('etc');
-  etc.textContent = '$ ' + parseFloat(Math.round(project_todate['Bugeted Cost of Work Remaining']*100) / 100).toFixed(2);
+  etc.textContent = '$ ' + parseFloat(Math.round(project_todate['BCWR']*100) / 100).toFixed(2);
 
   var reportingpercent = document.getElementById('reportingpercent');
-  reportingpercent.textContent = parseFloat(Math.round(project_todate['Percent Complete'] *100) / 100).toFixed(4) * 100 + '%';
+  reportingpercent.textContent = parseFloat(Math.round(project_todate['PerComp'] *100) / 100).toFixed(4) * 100 + '%';
 }
 
 $.getJSON( "cum_json.json", function(data) {
