@@ -291,7 +291,7 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     #cum_todateUI_table["Period CPI"] = period_CPI
     #cum_todateUI_table["Period CV"] = period_CV
     #print(cum_todateUI_table)
-    with open('cum_json.txt', 'w') as outfile:
+    with open('cum_json.json', 'w') as outfile:
         json.dump(cum_todateUI_table, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
     
     return periodArray_toJSON, cumArray_toJSON, cum_todateUI_table, #cum_to_json
