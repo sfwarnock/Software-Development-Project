@@ -182,7 +182,7 @@ def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, proj
     
     assert variance_at_complete == project_CV, 'VAC and CV are not equal'
     
-    return '${:.{prec}f}'.format(eac, prec = 2),tcpi.round(2), performance_ETC,performance_tcpi, performance_EAC, variance_at_complete
+    return eac, tcpi, performance_ETC,performance_tcpi, performance_EAC, variance_at_complete
 
 def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
     cum_BCWP = cum_DataFrame.loc['Cumulative Earned Value', dateHeaderValues]
@@ -233,7 +233,7 @@ def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     print()
     print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), 
            "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), 
-           "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:", 
+           "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:",'${:.{prec}f}'.format(eac, prec = 2), 
            "VAC:",'${:.{prec}f}'.format(variance_at_complete, prec = 2))
     print ()
     print ("Project CPI:", project_CPI.round(2), "Project SPI", project_SPI.round(2), 
@@ -268,8 +268,8 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
                                                                   'Cumulative Total Cost'])].to_json(orient = 'index')
     
     
-    cum_todateUI_table = {"Budget at Complete": bac, "BCWP": bcwp, "Percent Complete": percent_complete,
-                      "Bugeted Cost of Work Remaining": bcwr}
+    cum_todateUI_table = {"BAC": bac, "BCWP": bcwp, "PerComp": percent_complete,
+                      "BCWR": bcwr}
     cum_todateUI_table["BCWS"] = bcws
     cum_todateUI_table["ACWP"] = acwp
     cum_todateUI_table["EAC"] = eac
@@ -278,9 +278,9 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     cum_todateUI_table["SPI"] = project_SPI
     cum_todateUI_table["CV"] = project_CV
     cum_todateUI_table["SV"] = project_SV
-    cum_todateUI_table["Performance ETC"] = performance_ETC
-    cum_todateUI_table["Performance EAC"] = performance_EAC
-    cum_todateUI_table["Perfromance TCPI"] = performance_tcpi
+    cum_todateUI_table["PETC"] = performance_ETC
+    cum_todateUI_table["PEAC"] = performance_EAC
+    cum_todateUI_table["PTCPI"] = performance_tcpi
     cum_todateUI_table["VAC"] = variance_at_complete
     #cum_todateUI_table["Period BCWS"] = period_BCWS
     #cum_todateUI_table["Period Percent Complete"] =
