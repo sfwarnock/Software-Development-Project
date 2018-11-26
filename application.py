@@ -263,9 +263,13 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
                 period_CV):
     periodArray_toJSON = cum_DataFrame.loc[cum_DataFrame.index.isin(['Period Total Planned', 'Period Total Earned', 
                                                                      'Period Total Cost'])].to_json(orient = 'index')
+    with open('periodArray_toJSON.json', 'w') as outfile:
+        json.dump(periodArray_toJSON, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
 
     cumArray_toJSON = cum_DataFrame.loc[cum_DataFrame.index.isin(['Cumulative Planned Value', 'Cumulative Earned Value', 
                                                                   'Cumulative Total Cost'])].to_json(orient = 'index')
+    with open('cumArray_toJSON.json', 'w') as outfile:
+        json.dump(cumArray_toJSON, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
     
     
     cum_todateUI_table = {"BAC": bac, "BCWP": bcwp, "PerComp": percent_complete,
@@ -282,18 +286,18 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     cum_todateUI_table["PEAC"] = performance_EAC
     cum_todateUI_table["PTCPI"] = performance_tcpi
     cum_todateUI_table["VAC"] = variance_at_complete
-    #cum_todateUI_table["Period BCWS"] = period_BCWS
-    #cum_todateUI_table["Period Percent Complete"] =
-    #cum_todateUI_table["Period BCWP"] = period_BCWP
-    #cum_todateUI_table["Period ACWP"] = period_ACWP
-    #cum_todateUI_table["Period SPI"] = period_SPI
-    #cum_todateUI_table["Period SV"] = period_SV
-    #cum_todateUI_table["Period CPI"] = period_CPI
-    #cum_todateUI_table["Period CV"] = period_CV
+    #cum_todateUI_table["PerBCWS"] = period_BCWS
+    #cum_todateUI_table["PerPercent Complete"] =
+    #cum_todateUI_table["PerBCWP"] = period_BCWP
+    #cum_todateUI_table["PerACWP"] = period_ACWP
+    #cum_todateUI_table["PerSPI"] = period_SPI
+    #cum_todateUI_table["PerSV"] = period_SV
+    #cum_todateUI_table["PerCPI"] = period_CPI
+    #cum_todateUI_table["PerCV"] = period_CV
     #print(cum_todateUI_table)
     with open('cum_json.json', 'w') as outfile:
         json.dump(cum_todateUI_table, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
     
-    return periodArray_toJSON, cumArray_toJSON, cum_todateUI_table, #cum_to_json
+    return periodArray_toJSON, cumArray_toJSON, cum_todateUI_table
 
 main()
