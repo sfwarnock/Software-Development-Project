@@ -21,10 +21,10 @@ function loadData(project_todate) {
   cv.textContent = '$ ' + parseFloat(project_todate['CV']).toLocaleString('en');
 
   var eac_CPI = document.getElementById('EAC_CPI');
-  eac_CPI.textContent = '$ ' + parseFloat(project_todate['EAC_CPI']).toLocaleString();
+  eac_CPI.textContent = '$ ' + parseFloat(project_todate['EAC_CPI']).toFixed(2);
 
   var eac_comp = document.getElementById('EAC_Composite');
-  eac_comp.textContent = parseFloat(project_todate['EAC_Composite']).toLocaleString();
+  eac_comp.textContent = parseFloat(project_todate['EAC_Composite']).toLocaleString('en');
 
   var eac_gen = document.getElementById('eac_gen');
   eac_gen.textContent = '$ ' + parseFloat(project_todate['EAC_General']).toLocaleString('en');
@@ -48,7 +48,7 @@ function loadData(project_todate) {
   tcpi_eac.textContent = parseFloat(Math.round(project_todate['TCPI_EAC']*100) / 100).toFixed(2);
 
   var vac = document.getElementById('vac');
-  vac.textContent = '$' + parseFloat(project_todate['VAC']).toLocaleString('en');
+  vac.textContent = '$' + parseFloat(project_todate['VAC']).toLocaleString();
 
   var totalbudget = document.getElementById('totalbudget');
   totalbudget.textContent = '$ ' + parseFloat(project_todate['BAC']).toLocaleString('en');
