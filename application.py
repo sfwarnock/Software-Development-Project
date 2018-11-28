@@ -15,8 +15,8 @@ import json
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
     period_DataFrame = period_Data(csv_DataFrame, csv_header, dateHeaderValues)
-    period_ACWP, period_CPI, period_CV = period_Cost(period_DataFrame, dateHeaderValues)
-    period_BCWP, period_BCWS, period_SV, period_SPI = period_Schedule(period_DataFrame, dateHeaderValues)
+    period_CPI, period_CV, period_ACWP, currentMonth_ACWP, currentMonth_BCWP, currentMonth_CPI, currentMonth_CV = period_Cost(period_DataFrame, dateHeaderValues)
+    period_SPI, period_SV, period_BCWP, period_BCWS, currentMonth_BCWS, currentMonth_SPI, currentMonth_SV = period_Schedule(period_DataFrame, dateHeaderValues)
     cum_DataFrame = cumulative_Data(period_DataFrame)
     cum_Cost(cum_DataFrame, dateHeaderValues)
     cum_Schedule(cum_DataFrame, dateHeaderValues)
@@ -36,7 +36,8 @@ def main():
                 project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, tcpi_BAC, tcpi_EAC, 
                 variance_at_complete, etc, cum_DataFrame,
                 period_BCWS, period_BCWP, period_ACWP, period_SPI, period_SV, period_CPI,
-                period_CV)
+                period_CV,currentMonth_ACWP, currentMonth_BCWP, currentMonth_CPI, currentMonth_CV,
+                currentMonth_BCWS, currentMonth_SPI, currentMonth_SV)
     
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
@@ -94,11 +95,11 @@ def period_Cost(period_DataFrame, dateHeaderValues):
     period_DataFrame.loc['Period CPI'] = period_CPI
     
     currentMonth_ACWP = period_DataFrame.loc['Period Total Cost', dateHeaderValues[-1]]
-    currentMonth_BCWP = period_DataFrame.loc['Period Total Cost', dateHeaderValues[-1]]
-    currentMonth_CPI = period_DataFrame.loc['Period Total Cost', dateHeaderValues[-1]]
+    currentMonth_BCWP = period_DataFrame.loc['Period Total Planned', dateHeaderValues[-1]]
+    currentMonth_CPI = period_DataFrame.loc['Period CPI', dateHeaderValues[-1]]
+    currentMonth_CV = period_DataFrame.loc['Period CV', dateHeaderValues[-1]]
     
-    
-    return period_CPI, period_CV, period_ACWP
+    return period_CPI, period_CV, period_ACWP, currentMonth_ACWP, currentMonth_BCWP, currentMonth_CPI, currentMonth_CV
 
 def period_Schedule(period_DataFrame, dateHeaderValues):
     period_BCWP = period_DataFrame.loc['Period Total Planned', dateHeaderValues]
@@ -109,7 +110,12 @@ def period_Schedule(period_DataFrame, dateHeaderValues):
     
     period_DataFrame.loc['Period SV'] = period_SV
     period_DataFrame.loc['Period SPI'] = period_SPI
-    return period_SPI, period_SV, period_BCWP, period_BCWS
+    
+    currentMonth_BCWS = period_DataFrame.loc['Period Total Earned', dateHeaderValues[-1]]
+    currentMonth_SPI = period_DataFrame.loc['Period SPI', dateHeaderValues[-1]]
+    currentMonth_SV = period_DataFrame.loc['Period SV', dateHeaderValues[-1]]
+    
+    return period_SPI, period_SV, period_BCWP, period_BCWS, currentMonth_BCWS, currentMonth_SPI, currentMonth_SV
 
 def filter_ChargeCode(period_DataFrame, cum_DataFrame, csv_DataFrame, csv_header):
     filter_ChargeCode_csv = pd.pivot_table(csv_DataFrame, values = csv_header, index=['Charge Code', 'CAM', 'Value Type'])
@@ -155,6 +161,7 @@ def cum_Cost(cum_DataFrame, dateHeaderValues):
     
     cum_DataFrame.loc['CPI'] = cum_CPI
     cum_DataFrame.loc['CV'] = cum_CV
+    
     return cum_CV, cum_CPI, cum_ACWP
 
 def project_reporting(cum_DataFrame):
@@ -270,7 +277,8 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
                 project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, tcpi_BAC, tcpi_EAC, 
                 variance_at_complete, etc, cum_DataFrame,
                 period_BCWS, period_BCWP, period_ACWP, period_SPI, period_SV, period_CPI,
-                period_CV):
+                period_CV, currentMonth_ACWP, currentMonth_BCWP, currentMonth_CPI, currentMonth_CV,
+                currentMonth_BCWS, currentMonth_SPI, currentMonth_SV):
     
     periodArray_toJSON = cum_DataFrame.loc[cum_DataFrame.index.isin(['Period Total Planned', 'Period Total Earned', 
                                                                      'Period Total Cost'])].to_json(orient = 'index')
@@ -299,14 +307,14 @@ def data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV,
     cum_todateUI_table["TCPI_EAC"] = tcpi_EAC
     cum_todateUI_table["TCPI_BAC"] = tcpi_BAC
     cum_todateUI_table["VAC"] = variance_at_complete 
-    #cum_todateUI_table["PerBCWS"] = period_BCWS
+    cum_todateUI_table["PerBCWS"] = currentMonth_BCWS
     #cum_todateUI_table["PerPerComp"] =
-    #cum_todateUI_table["PerBCWP"] = period_BCWP
-    #cum_todateUI_table["PerACWP"] = period_ACWP
-    #cum_todateUI_table["PerSPI"] = period_SPI
-    #cum_todateUI_table["PerSV"] = period_SV
-    #cum_todateUI_table["PerCPI"] = period_CPI
-    #cum_todateUI_table["PerCV"] = period_CV
+    cum_todateUI_table["PerBCWP"] = currentMonth_BCWP
+    cum_todateUI_table["PerACWP"] = currentMonth_ACWP
+    cum_todateUI_table["PerSPI"] = currentMonth_SPI
+    cum_todateUI_table["PerSV"] = currentMonth_SV
+    cum_todateUI_table["PerCPI"] = currentMonth_CPI
+    cum_todateUI_table["PerCV"] = currentMonth_CV
     #print(cum_todateUI_table)
     with open('cum_json.json', 'w') as outfile:
         json.dump(cum_todateUI_table, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
