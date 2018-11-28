@@ -92,6 +92,12 @@ def period_Cost(period_DataFrame, dateHeaderValues):
         
     period_DataFrame.loc['Period CV'] = period_CV
     period_DataFrame.loc['Period CPI'] = period_CPI
+    
+    currentMonth_ACWP = period_DataFrame.loc['Period Total Cost', dateHeaderValues[-1]]
+    currentMonth_BCWP = period_DataFrame.loc['Period Total Cost', dateHeaderValues[-1]]
+    currentMonth_CPI = period_DataFrame.loc['Period Total Cost', dateHeaderValues[-1]]
+    
+    
     return period_CPI, period_CV, period_ACWP
 
 def period_Schedule(period_DataFrame, dateHeaderValues):
