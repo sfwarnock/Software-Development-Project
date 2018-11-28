@@ -24,7 +24,7 @@ function loadData(project_todate) {
   eac_CPI.textContent = '$ ' + parseFloat(project_todate['EAC_CPI']).toFixed(2);
 
   var eac_comp = document.getElementById('EAC_Composite');
-  eac_comp.textContent = parseFloat(project_todate['EAC_Composite']).toLocaleString('en');
+  eac_comp.textContent = '$' + parseFloat(project_todate['EAC_Composite']).toLocaleString('en');
 
   var eac_gen = document.getElementById('eac_gen');
   eac_gen.textContent = '$ ' + parseFloat(project_todate['EAC_General']).toLocaleString('en');
