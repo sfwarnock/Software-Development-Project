@@ -32,8 +32,29 @@ function loadData(project_todate) {
   var etc = document.getElementById('etc');
   etc.textContent = '$ ' + parseFloat(project_todate['ETC']).toLocaleString('en');
 
+  var perACWP = document.getElementById('perACWP');
+  perACWP.textContent = '$ ' + parseFloat(project_todate['PerACWP']).toLocaleString('en');
+
+  var perBCWP = document.getElementById('perBCWP');
+  perBCWP.textContent = '$ ' + parseFloat(project_todate['PerBCWP']).toLocaleString('en');
+
+  var perBCWS = document.getElementById('perBCWS');
+  perBCWS.textContent = '$ ' + parseFloat(project_todate['PerBCWS']).toLocaleString('en');
+
+  var perCPI = document.getElementById('perCPI');
+  perCPI.textContent = parseFloat(project_todate['PerCPI']).toLocaleString('en');
+
+  var perCV = document.getElementById('perCV');
+  perCV.textContent = '$ ' + parseFloat(project_todate['PerCV']).toLocaleString('en');
+
   var percentcom = document.getElementById('percentcom');
   percentcom.textContent = parseFloat(Math.round(project_todate['PerComp'] *100) / 100).toFixed(4) * 100;
+
+  var perSPI = document.getElementById('perSPI');
+  perSPI.textContent = parseFloat(project_todate['PerSPI']).toLocaleString('en');
+
+  var perSV = document.getElementById('perSV');
+  perSV.textContent = '$ ' + parseFloat(project_todate['PerSV']).toLocaleString('en');
 
   var spi = document.getElementById('spi');
   spi.textContent = parseFloat(project_todate['SPI']).toLocaleString('en');
