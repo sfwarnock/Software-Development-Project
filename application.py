@@ -14,16 +14,24 @@ import json
 
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
+    
     period_DataFrame = period_Data(csv_DataFrame, csv_header, dateHeaderValues)
+    
     period_CPI, period_CV, period_ACWP, currentMonth_ACWP, currentMonth_BCWP, currentMonth_CPI, currentMonth_CV = period_Cost(period_DataFrame, dateHeaderValues)
+    
     period_SPI, period_SV, period_BCWP, period_BCWS, currentMonth_BCWS, currentMonth_SPI, currentMonth_SV, currentMonth_PercentComplete = period_Schedule(period_DataFrame, 
                                                                                                                                                           dateHeaderValues,
                                                                                                                                                           currentMonth_BCWP)
     cum_DataFrame = cumulative_Data(period_DataFrame)
+    
     cum_Cost(cum_DataFrame, dateHeaderValues)
+    
     cum_Schedule(cum_DataFrame, dateHeaderValues)
+    
     bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, project_SV = project_reporting(cum_DataFrame)
+    
     percent_complete, bcwr = bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac)
+    
     eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, tcpi_EAC, variance_at_complete = estimate_at_complete(cum_DataFrame, 
                                                                                                               bcwr, bac, bcwp, 
                                                                                                               acwp, project_CPI,
@@ -32,15 +40,18 @@ def main():
     tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, 
                 tcpi_EAC, variance_at_complete, cum_DataFrame)   
+    
     data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues)
+    
     #sql_database(csv_DataFrame, period_DataFrame, cum_DataFrame) 
+    
     data_to_JSON(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, tcpi_BAC, tcpi_EAC, 
-                variance_at_complete, etc, cum_DataFrame,
+                variance_at_complete, etc, cum_DataFrame, currentMonth_PercentComplete,
                 period_BCWS, period_BCWP, period_ACWP, period_SPI, period_SV, period_CPI,
-                period_CV,currentMonth_ACWP, currentMonth_BCWP, currentMonth_CPI, currentMonth_CV,
+                period_CV, currentMonth_ACWP, currentMonth_BCWP, currentMonth_CPI, currentMonth_CV,
                 currentMonth_BCWS, currentMonth_SPI, currentMonth_SV)
-    
+                
 def csv_Read():
     csv_DataFrame = pd.read_csv('datafile.csv').fillna(0)
     csv_header = csv_DataFrame.columns.values.tolist()
@@ -116,7 +127,7 @@ def period_Schedule(period_DataFrame, dateHeaderValues, currentMonth_BCWP):
     currentMonth_BCWS = period_DataFrame.loc['Period Total Earned', dateHeaderValues[-1]]
     currentMonth_SPI = period_DataFrame.loc['Period SPI', dateHeaderValues[-1]]
     currentMonth_SV = period_DataFrame.loc['Period SV', dateHeaderValues[-1]]
-    currentMonth_PercentComplete = currentMonth_BCWS / currentMonth_BCWP
+    currentMonth_PercentComplete = currentMonth_BCWS / currentMonth_BCWS
     
     return period_SPI, period_SV, period_BCWP, period_BCWS, currentMonth_BCWS, currentMonth_SPI, currentMonth_SV, currentMonth_PercentComplete
 
