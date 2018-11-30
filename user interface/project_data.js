@@ -50,6 +50,9 @@ function loadData(project_todate) {
   var percentcom = document.getElementById('percentcom');
   percentcom.textContent = parseFloat(Math.round(project_todate['PerComp'] *100) / 100).toFixed(4) * 100;
 
+  var period_percentcom = document.getElementById('period_percentcom');
+  period_percentcom.textContent = parseFloat(Math.round(project_todate['PerPerComp'] *100) / 100).toFixed(4) * 100;
+
   var perSPI = document.getElementById('perSPI');
   perSPI.textContent = parseFloat(project_todate['PerSPI']).toLocaleString('en');
 
