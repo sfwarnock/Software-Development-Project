@@ -21,7 +21,7 @@ function loadData(project_todate) {
   cv.textContent = '$ ' + parseFloat(project_todate['CV']).toLocaleString('en');
 
   var eac_CPI = document.getElementById('EAC_CPI');
-  eac_CPI.textContent = '$ ' + parseFloat(project_todate['EAC_CPI']).toFixed(2);
+  eac_CPI.textContent = '$ ' + parseFloat(project_todate['EAC_CPI']).toFixed(2).toLocaleString();
 
   var eac_comp = document.getElementById('EAC_Composite');
   eac_comp.textContent = '$' + parseFloat(project_todate['EAC_Composite']).toLocaleString('en');
@@ -42,7 +42,7 @@ function loadData(project_todate) {
   perBCWS.textContent = '$ ' + parseFloat(project_todate['PerBCWS']).toLocaleString('en');
 
   var perCPI = document.getElementById('perCPI');
-  perCPI.textContent = parseFloat(project_todate['PerCPI']).toLocaleString('en');
+  perCPI.textContent = parseFloat(project_todate['PerCPI']).toFixed(2);
 
   var perCV = document.getElementById('perCV');
   perCV.textContent = '$ ' + parseFloat(project_todate['PerCV']).toLocaleString('en');
