@@ -201,8 +201,8 @@ def bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac):
 
 def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, project_CV, project_SPI):
 
-    eac_general = (bac / project_CPI)                            
-    eac_CPI = (acwp + (bcwr / project_CPI))  
+    eac_general = bac / project_CPI.round(2)                            
+    eac_CPI = (acwp.round(2) + (bcwr.round(2) / project_CPI.round(2)))  
     eac_Composite = acwp + (bcwr/(project_CPI * project_SPI))    
 
     etc = eac_general - acwp
