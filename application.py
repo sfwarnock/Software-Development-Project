@@ -12,6 +12,7 @@ import pandas.api.types as ptypes
 #from sqlalchemy import create_engine
 import json
 
+
 def main():
     csv_DataFrame, csv_header, dateHeaderValues = csv_Read()
     
@@ -201,9 +202,9 @@ def bugeted_cost_work_remaining(cum_DataFrame, bcwp, bac):
 
 def estimate_at_complete(cum_DataFrame, bcwr, bac, bcwp, acwp, project_CPI, project_CV, project_SPI):
 
-    eac_general = bac / project_CPI.round(2)                            
-    eac_CPI = (acwp.round(2) + (bcwr.round(2) / project_CPI.round(2)))  
-    eac_Composite = acwp + (bcwr/(project_CPI * project_SPI))    
+    eac_general = bac / project_CPI.round(3)                            
+    eac_CPI = acwp + (bcwr / project_CPI.round(3))  
+    eac_Composite = acwp + bcwr / (project_CPI.round(3) * project_SPI.round(3))    
 
     etc = eac_general - acwp
     
@@ -262,7 +263,7 @@ def data_Visualazation(cum_DataFrame, period_DataFrame, dateHeaderValues):
 def tables_data(bac, bcwp, bcws, acwp, project_CPI, project_SPI, project_CV, 
                 project_SV, percent_complete, bcwr, eac_general, eac_CPI, eac_Composite, etc, tcpi_BAC, 
                 tcpi_EAC, variance_at_complete, cum_DataFrame): 
-    print(eac_general, eac_CPI, eac_Composite)
+    print(eac_general, eac_CPI, eac_Composite, bac)
     print ("Planned Value:", '${:.{prec}f}'.format(bcws, prec = 2), "Earned Value:", '${:.{prec}f}'.format(bcwp, prec = 2), 
            "Percent Complete: %", '{:.{prec}f}'.format(percent_complete * 100, prec = 1), 
            "Total Cost:",'${:.{prec}f}'.format(acwp, prec = 2), "EAC:",'${:.{prec}f}'.format(eac_general, prec = 2), 
